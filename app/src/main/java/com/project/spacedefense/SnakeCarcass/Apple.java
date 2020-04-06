@@ -1,4 +1,4 @@
-package com.project.spacedefense;
+package com.project.spacedefense.SnakeCarcass;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
+
+import com.project.spacedefense.R;
 
 import java.util.Random;
 

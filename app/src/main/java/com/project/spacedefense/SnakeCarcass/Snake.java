@@ -1,4 +1,4 @@
-package com.project.spacedefense;
+package com.project.spacedefense.SnakeCarcass;
 
 import android.content.Context;
 import android.graphics.Canvas;

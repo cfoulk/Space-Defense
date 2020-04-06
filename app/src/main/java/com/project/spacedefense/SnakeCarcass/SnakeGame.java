@@ -2,7 +2,7 @@
 //March 2nd 2020
 
 
-package com.project.spacedefense;
+package com.project.spacedefense.SnakeCarcass;
 
 
 import android.content.Context;

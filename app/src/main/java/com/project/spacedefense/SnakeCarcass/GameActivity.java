@@ -1,16 +1,23 @@
-package com.project.spacedefense;
+package com.project.spacedefense.SnakeCarcass;
 
 import android.app.Activity;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Display;
 
+import com.project.spacedefense.TowerGame;
+
 import java.io.IOException;
 
-public class SnakeActivity extends Activity {
 
-    // Declare an instance of SnakeGame
-    SnakeGame mSnakeGame;
+/*
+This is completely copied over from previous projects only changed some names
+*/
+
+
+public class GameActivity extends Activity {
+
+    TowerGame tGame;
 
     // Set the game up
     @Override
@@ -24,28 +31,28 @@ public class SnakeActivity extends Activity {
         Point size = new Point();
         display.getSize(size);
 
-        // Create a new instance of the SnakeEngine class
+        // Create a new instance of the TowerGame class
         try {
-            mSnakeGame = new SnakeGame(this, size);
+            tGame = new TowerGame(this, size);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // Make snakeEngine the view of the Activity
-        setContentView(mSnakeGame);
+        // Make Engine the view of the Activity
+        setContentView(tGame);
     }
 
     // Start the thread in snakeEngine
     @Override
     protected void onResume() {
         super.onResume();
-        mSnakeGame.resume();
+        tGame.resume();
     }
 
     // Stop the thread in snakeEngine
     @Override
     protected void onPause() {
         super.onPause();
-        mSnakeGame.pause();
+        tGame.pause();
     }
 }
