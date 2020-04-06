@@ -1,4 +1,4 @@
-package com.project.spacedefense.SnakeCarcass;
+package com.project.spacedefense;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -7,13 +7,11 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
-
-import com.project.snakeysnake.Snake.Heading;
-import com.project.spacedefense.R;
+import com.project.spacedefense.Enemy.Heading;
 
 import java.util.ArrayList;
 
-class SnakeHead implements SnakeComponent{
+class AlienInvader {
 
     // A bitmap for each direction the head can face
     private Bitmap mBitmapHeadRight;
@@ -26,7 +24,7 @@ class SnakeHead implements SnakeComponent{
     private Heading heading;
 
 
-    SnakeHead(Context context, int ss, int mSegmentSize, Point mr, Heading heading){
+    AlienInvader(Context context, int ss, int mSegmentSize, Point mr, Heading heading){
 
         this.mSegmentSize = mSegmentSize;
 
@@ -35,20 +33,20 @@ class SnakeHead implements SnakeComponent{
 
         mBitmapHeadRight = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.head);
+                        R.drawable.alien_octo);
 
         // Create 3 more versions of the head for different headings
         mBitmapHeadLeft = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.head);
+                        R.drawable.alien_octo);
 
         mBitmapHeadUp = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.head);
+                        R.drawable.alien_octo);
 
         mBitmapHeadDown = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.head);
+                        R.drawable.alien_octo);
 
         // Modify the bitmaps to face the snake head
         // in the correct direction
@@ -81,7 +79,7 @@ class SnakeHead implements SnakeComponent{
 
 
 
-    @Override
+
     public void draw(ArrayList<Point> segmentLocations, Canvas canvas, Paint paint) {
 
         switch (heading) {

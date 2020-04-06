@@ -1,14 +1,13 @@
-package com.project.spacedefense.SnakeCarcass;
+package com.project.spacedefense;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
-class Snake {
+class Enemy {
 
     // The location in the grid of all the segments
     private ArrayList<Point> segmentLocations;
@@ -22,6 +21,7 @@ class Snake {
     // Where is the centre of the screen
     // horizontally in pixels?
     private int halfWayPoint;
+    private int leftSidePoint;
 
     // For tracking movement Heading
     public enum Heading {
@@ -31,11 +31,11 @@ class Snake {
     // Start by heading to the right
     private Heading heading = Heading.RIGHT;
 
-    private SnakeBody snakeBody;
-    private SnakeHead snakeHead;
+    //private SnakeBody snakeBody;
+    private AlienInvader alienInvader;
 
 
-    Snake(Context context, Point mr, int ss) {
+    Enemy(Context context, Point mr, int ss) {
 
         // Initialize our ArrayList
         segmentLocations = new ArrayList<>();
@@ -46,12 +46,14 @@ class Snake {
         mMoveRange = mr;
 
         // Create and scale the bitmaps
-        snakeHead = new SnakeHead(context, ss, mSegmentSize, mr, heading);
-        snakeBody = new SnakeBody(context, ss, mSegmentSize);
+        alienInvader = new AlienInvader(context, ss, mSegmentSize, mr, heading);
+        //snakeBody = new SnakeBody(context, ss, mSegmentSize);
 
         // The halfway point across the screen in pixels
         // Used to detect which side of screen was pressed
-        halfWayPoint = mr.x * ss / 2;
+        //halfWayPoint = mr.x * ss / 2;
+        halfWayPoint = mr.x * ss;
+        //leftSidePoint = mr.x * ss;
     }
 
     // Get the snake ready for a new game
@@ -64,7 +66,9 @@ class Snake {
         segmentLocations.clear();
 
         // Start with a single snake segment
-        segmentLocations.add(new Point(w / 2, h / 2));
+        segmentLocations.add(new Point(w / 10, h / 2));
+        //TODO this starts the path of enemy on far left side of path
+
     }
 
 
@@ -105,7 +109,8 @@ class Snake {
 
     }
 
-    boolean detectDeath() {
+    //Old code
+    boolean detectDeath() { //TODO convert this into detect space base collision (enemies won)
         // Has the snake died?
         boolean dead = false;
 
@@ -130,7 +135,8 @@ class Snake {
         return dead;
     }
 
-    boolean checkDinner(Point l, Apple mApple) {
+    //Old code will not be used
+    boolean checkDinner(Point l, Turret mTurret) {
         //if (snakeXs[0] == l.x && snakeYs[0] == l.y) {
         if (segmentLocations.get(0).x == l.x &&
                 segmentLocations.get(0).y == l.y) {
@@ -141,7 +147,7 @@ class Snake {
             // move it will take the position of
             // the segment in front of it
 
-            if(mApple.getStatus() != 0){
+            if(mTurret.getStatus() != 0){
                 segmentLocations.add(new Point(-10, -10));
             }
             //segmentLocations.add(new Point(-10, -10));
@@ -156,15 +162,15 @@ class Snake {
         // Don't run this code if ArrayList has nothing in it
         if (!segmentLocations.isEmpty()) {
 
-            snakeHead.draw(segmentLocations, canvas, paint);
-            snakeBody.draw(segmentLocations, canvas, paint);
+            alienInvader.draw(segmentLocations, canvas, paint);
+            //snakeBody.draw(segmentLocations, canvas, paint);
 
         }
     }
 
 
     // Handle changing direction
-    void switchHeading(MotionEvent motionEvent) {
+    /*void switchHeading(MotionEvent motionEvent) {
 
         // Is the tap on the right hand side?
         if (motionEvent.getX() >= halfWayPoint) {
@@ -201,5 +207,5 @@ class Snake {
                     break;
             }
         }
-    }
+    } */
 }

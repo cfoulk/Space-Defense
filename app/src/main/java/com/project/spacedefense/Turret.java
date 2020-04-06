@@ -1,4 +1,4 @@
-package com.project.spacedefense.SnakeCarcass;
+package com.project.spacedefense;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,12 +6,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-
-import com.project.spacedefense.R;
-
 import java.util.Random;
 
-public class Apple {
+public class Turret {
 
     // The location of the apple on the grid
     // Not in pixels
@@ -36,15 +33,15 @@ public class Apple {
 
     /// Set up the apple in the constructor
 
-    public Apple(AppleBuilder appleBuilder){
+    public Turret(TurretBuilder turretBuilder){
         super();
 
-        this.mSpawnRange = appleBuilder.mSpawnRange;
-        this.mSize = appleBuilder.mSize;
-        this.context = appleBuilder.context;
-        this.mBitmapApple = appleBuilder.mBitmapApple;
-        this.location = appleBuilder.location;
-        this.status = appleBuilder.status;
+        this.mSpawnRange = turretBuilder.mSpawnRange;
+        this.mSize = turretBuilder.mSize;
+        this.context = turretBuilder.context;
+        this.mBitmapApple = turretBuilder.mBitmapTurret;
+        this.location = turretBuilder.location;
+        this.status = turretBuilder.status;
 
     }
 
@@ -61,11 +58,14 @@ public class Apple {
     }
 
     // This is called every time an apple is eaten
-    void spawn(){
+    void spawn(){ //TODO make this spawn call callable from somewhere else so that we can spown on command.
         // Choose two random values and place the apple
         Random random = new Random();
-        location.x = random.nextInt(mSpawnRange.x) + 1;
-        location.y = random.nextInt(mSpawnRange.y - 1) + 1;
+       // location.x = random.nextInt(mSpawnRange.x) + 1;
+       // location.y = random.nextInt(mSpawnRange.y - 1) + 1;
+        location.x = (mSpawnRange.x - 6); //TODO use this call technique to spawn on command where wanted
+        location.y = (mSpawnRange.y- 10) / 2;
+
     }
 
     // Draw the apple
@@ -82,7 +82,7 @@ public class Apple {
 
 
 
-    public static class AppleBuilder{
+    public static class TurretBuilder {
 
         private Point location;
         // The range of values we can choose from to spawn an apple
@@ -91,7 +91,7 @@ public class Apple {
         private final Point mSpawnRange;
         private final int mSize;
 
-        private Bitmap mBitmapApple;
+        private Bitmap mBitmapTurret;
         // An interchangeable image to represent the apple
 
         //The status of the apple. 1 or true = good, 0 or false = bad
@@ -99,7 +99,7 @@ public class Apple {
 
 
         /// Set up the apple in the constructor
-        public AppleBuilder(Context context, Point mSpawnRange, int mSize){
+        public TurretBuilder(Context context, Point mSpawnRange, int mSize){
             this.context = context;
             // Make a note of the passed in spawn range
             this.mSpawnRange = mSpawnRange;
@@ -107,17 +107,20 @@ public class Apple {
             this.mSize = mSize;
 
 
+
             // Hide the apple off-screen until the game starts
             this.location = new Point();
-            this.location.x = -10;
+            //this.location.x = -10;
 
             status = setStatus();
 
         }
 
         public int setStatus(){
-            Random rand = new Random();
-            int random = rand.nextInt(4);
+            //Random rand = new Random();
+            //int random = rand.nextInt(4);
+
+            int random = 1;
 
             return random;
         }
@@ -125,14 +128,15 @@ public class Apple {
 
 
 
-        public AppleBuilder mBitmapApple(){
+        public TurretBuilder mBitMapTurrets(){
             // Load the image to the bitmap
 
-            Bitmap mBitmapApple1;
+            Bitmap mTurret1;
+                mTurret1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.guns);
 
 
 
-            if(status == 0){
+      /*      if(status == 0){
                 mBitmapApple1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.badapple);
             } else if(status == 1){
                 mBitmapApple1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple);
@@ -141,11 +145,11 @@ public class Apple {
             } else{
                 mBitmapApple1 = BitmapFactory.decodeResource(context.getResources(), R.drawable.apple3points);
             }
-
+*/
 
             // Resize the bitmap
-            mBitmapApple1 = Bitmap.createScaledBitmap(mBitmapApple1, this.mSize, this.mSize, false);
-            mBitmapApple = mBitmapApple1;
+            mTurret1 = Bitmap.createScaledBitmap(mTurret1, this.mSize, this.mSize, false);
+            mBitmapTurret = mTurret1;
 
 
             return this;
@@ -153,12 +157,12 @@ public class Apple {
 
 
         // Draw the apple
-        public Apple build(){
-            Apple apple = new Apple(this);
+        public Turret build(){
+            Turret turret = new Turret(this);
 
             //setStatus();
 
-            return apple;
+            return turret;
 
         }
 
@@ -166,6 +170,7 @@ public class Apple {
     }
 
     public int getStatus(){
+
         return status;
     }
 
