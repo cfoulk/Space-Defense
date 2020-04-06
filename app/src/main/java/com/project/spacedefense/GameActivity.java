@@ -1,4 +1,4 @@
-package com.project.spacedefense.SnakeCarcass;
+package com.project.spacedefense;
 
 import android.app.Activity;
 import android.graphics.Point;
