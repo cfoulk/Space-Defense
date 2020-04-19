@@ -58,6 +58,7 @@ class TowerGame extends SurfaceView implements Runnable{
     // And an apple
     private Turret mTurret;
     private Turret mTurret2;
+    HUD mHUD;
 
 
     private AssetManager assetManager;
@@ -66,6 +67,8 @@ class TowerGame extends SurfaceView implements Runnable{
     // from SnakeActivity
     public TowerGame(Context context, Point size) throws IOException {
         super(context);
+
+        mHUD = new HUD(size);
 
 
 
@@ -87,6 +90,8 @@ class TowerGame extends SurfaceView implements Runnable{
         // Initialize the drawing objects
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
+
+
 
         // Call the constructors of our two game objects
 
@@ -248,6 +253,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
             // Draw the score
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
+            mHUD.draw(mCanvas, mPaint);
 
             // Draw the apple and the snake
 
