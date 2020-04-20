@@ -1,5 +1,6 @@
 package com.project.spacedefense;
 
+// code has been altered from its original form:
 // The Nature of Code
 // Daniel Shiffman
 // http://natureofcode.com
