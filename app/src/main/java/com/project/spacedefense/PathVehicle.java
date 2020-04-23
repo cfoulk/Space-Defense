@@ -31,13 +31,13 @@ class PathVehicle {
     maxspeed = ms;
     maxforce = mf;
     acceleration = new Vector(0, 0);
-    velocity = new Vector((int) maxspeed, 0); //TODO uncast first parameter from int
+    velocity = new Vector((int) maxspeed, 0); //TODO uncast first parameter from int and back to float or double
   }
 
   // Main "run" function
   public void run() {
     update();
-    display();
+ //   display();  //TODO change this to draw
   }
 
 

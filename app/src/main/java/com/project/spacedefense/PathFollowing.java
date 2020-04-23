@@ -42,8 +42,12 @@ public class PathFollowing {
 
         // Each vehicle has different maxspeed and maxforce for demo purposes
 
+
+        //TODO uncoomment this out
+        /*
         car1 = new PathVehicle(new Vector(0, height / 2), 2, 0.04);
         car2 = new PathVehicle(new Vector(0, width / 2), 3, 0.1);
+        */
     }
 /*
     void draw() {
@@ -70,7 +74,9 @@ public class PathFollowing {
         // A path is a series of connected points
         // A more sophisticated path might be a curve
         path = new Path();
+        int height = 4;
         path.addPoint(-20, height / 2);
+        int width = 4;
         path.addPoint(random(0, width / 2), random(0, height));
         path.addPoint(random(width / 2, width), random(0, height));
         path.addPoint(width + 20, height / 2);
