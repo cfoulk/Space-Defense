@@ -26,6 +26,12 @@ class Path {
         // Arbitrary radius of 20
         radius = 20;
         points = new ArrayList<Vector>();
+
+        //designate start and end point
+
+        Vector start = new Vector<>();
+        Vector end = new Vector<>();
+
     }
 
     // Add a point to the path
