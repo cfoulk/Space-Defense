@@ -32,6 +32,7 @@ class Path {
         Vector start = new Vector<>();
         Vector end = new Vector<>();
 
+
     }
 
     // Add a point to the path
@@ -48,6 +49,9 @@ class Path {
     Vector getEnd() {
         return points.get(points.size()-1);
     }
+
+
+
 
 /*
     // Draw the path This is pde code? Can be translated to android later,

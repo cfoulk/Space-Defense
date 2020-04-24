@@ -14,6 +14,12 @@ import java.util.Vector;
 
 // Vehicle class
 
+
+
+//A vehicle can predict it's future position and react accordingly
+//It makes a copy of it's velocity
+//Normalizes it and looks 25 pixels ahead by scaling the vector up
+//Add vector too location to find the predicted location
 class PathVehicle {
 
   // All the usual stuff
@@ -41,7 +47,7 @@ class PathVehicle {
   }
 
 
-  /*
+
   // This function implements Craig Reynolds' path following algorithm
   // http://www.red3d.com/cwr/steer/PathFollow.html
   void follow(Path p) {
@@ -123,13 +129,15 @@ class PathVehicle {
   }
 
 
-   */
+
 //TODO Convert this math funtion into a working java version
   // A function to get the normal point from a point (p) to a line segment (a-b)
   // This function could be optimized to make fewer new Vector objects
   Vector getNormalPoint(Vector p, Vector a, Vector b) {
     // Vector from a to p
+
     Vector ap = Vector.sub(p, a);
+
     // Vector from a to b
     Vector ab = Vector.sub(b, a);
     ab.normalize(); // Normalize the line
