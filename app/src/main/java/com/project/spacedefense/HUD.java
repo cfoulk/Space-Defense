@@ -1,9 +1,12 @@
 package com.project.spacedefense;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
+import android.content.res.AssetManager;
 
 import java.util.ArrayList;
 
@@ -67,7 +70,7 @@ class HUD {
                 buttonPadding + buttonHeight);
 
         Rect tower1 = new Rect(
-                mScreenWidth - (buttonPadding * 2) - (buttonWidth * 2),
+                mScreenWidth - (buttonPadding * 2) - (buttonWidth * 2) ,
                 buttonPadding,
                 mScreenWidth - buttonPadding,
                 buttonPadding + buttonHeight);
@@ -95,6 +98,8 @@ class HUD {
         // Draw the HUD
         p.setColor(Color.argb(255,255,255,255));
         p.setTextSize(mTextFormatting);
+
+
         //c.drawText("Hi: " + gs.getHighScore(), mTextFormatting,mTextFormatting,p);
         //c.drawText("Scrore: " + gs.getScore(), mTextFormatting,mTextFormatting * 2,p);
         //c.drawText("Lives: " + gs.getNumShips(), mTextFormatting,mTextFormatting * 3,p);
@@ -112,10 +117,11 @@ class HUD {
     }
 
     private void drawControls(Canvas c, Paint p){
-        p.setColor(Color.argb(100,255,255,255));
+        p.setColor(Color.argb(100,50,255,255));
 
         for(Rect r : controls){
             c.drawRect(r.left, r.top, r.right, r.bottom, p);
+
 
         }
 

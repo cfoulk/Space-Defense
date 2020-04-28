@@ -20,6 +20,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
 
+import android.graphics.Path;
+
 class TowerGame extends SurfaceView implements Runnable{
 
     // Objects for the game loop/thread
@@ -260,6 +262,24 @@ class TowerGame extends SurfaceView implements Runnable{
             mTurret.draw(mCanvas, mPaint);
             mTurret2.draw(mCanvas,mPaint);
             mEnemy.draw(mCanvas, mPaint);
+
+            Path sPath = new Path();
+            sPath.moveTo(100, 500);
+            sPath.lineTo(1000, 500);
+            sPath.lineTo(1000, 750);
+            sPath.lineTo(2000,750);
+
+
+
+            //Paint ballPaint = new Paint();
+            //ballPaint.setColor(Color.GREEN);
+            Paint pathPaint = new Paint();
+            pathPaint.setColor(Color.GRAY);
+            pathPaint.setStyle(Paint.Style.STROKE);
+            pathPaint.setStrokeWidth(20);
+
+            mCanvas.drawPath(sPath, pathPaint);
+            //mCanvas.drawCircle(100,100,20,pathPaint);
 
             // Draw some text while paused
             if(mPaused){

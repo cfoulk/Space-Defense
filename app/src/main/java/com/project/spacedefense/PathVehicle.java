@@ -25,20 +25,20 @@ class PathVehicle {
   double maxspeed;    // Maximum speed
 
     // Constructor initialize all values
-  PathVehicle( Vector l, float ms, float mf) {
+  /*PathVehicle( Vector l, float ms, float mf) {
     position = l.get();
     r = 4.0;
     maxspeed = ms;
     maxforce = mf;
     acceleration = new Vector(0, 0);
     velocity = new Vector((int) maxspeed, 0); //TODO uncast first parameter from int
-  }
+  } */
 
   // Main "run" function
-  public void run() {
+  /*public void run() {
     update();
     display();
-  }
+  } */
 
 
   /*
@@ -124,6 +124,8 @@ class PathVehicle {
 
 
    */
+
+  /*
 //TODO Convert this math funtion into a working java version
   // A function to get the normal point from a point (p) to a line segment (a-b)
   // This function could be optimized to make fewer new Vector objects
@@ -138,8 +140,9 @@ class PathVehicle {
     Vector normalPoint = Vector.add(a, ab);
     return normalPoint;
   }
+*/
 
-
+  /*
   // Method to update position
   void update() {
     // Update velocity
@@ -175,7 +178,7 @@ class PathVehicle {
 
       applyForce(steer);
   }
-
+*/
 
   /*
   void display() {
@@ -207,9 +210,9 @@ class PathVehicle {
    */
 
 
-
+/*
 }
-
+*/
 
 
 

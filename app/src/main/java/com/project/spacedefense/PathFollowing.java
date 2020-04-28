@@ -38,12 +38,12 @@ public class PathFollowing {
         int width = getScreenWidth() / 2;
         //size(640, 360); //TODO convert this to screen size decision
         // Call a function to generate new Path object
-        newPath();
+        //newPath();
 
         // Each vehicle has different maxspeed and maxforce for demo purposes
 
-        car1 = new PathVehicle(new Vector(0, height / 2), 2, 0.04);
-        car2 = new PathVehicle(new Vector(0, width / 2), 3, 0.1);
+        //car1 = new PathVehicle(new Vector(0, height / 2), 2, 0.04);
+        //car2 = new PathVehicle(new Vector(0, width / 2), 3, 0.1);
     }
 /*
     void draw() {
@@ -65,7 +65,7 @@ public class PathFollowing {
         text("Hit space bar to toggle debugging lines.\nClick the mouse to generate a new path.", 10, height - 30);
     }
 */
-
+/*
     void newPath() {
         // A path is a series of connected points
         // A more sophisticated path might be a curve
@@ -74,7 +74,7 @@ public class PathFollowing {
         path.addPoint(random(0, width / 2), random(0, height));
         path.addPoint(random(width / 2, width), random(0, height));
         path.addPoint(width + 20, height / 2);
-    }
+    }*/
 /*
     public void keyPressed() {
         if (key == ' ') {
