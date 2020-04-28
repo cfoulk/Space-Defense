@@ -10,17 +10,29 @@ package com.project.spacedefense;
 import java.util.ArrayList;
 import java.util.Vector;
 
+
+//A path is a starting point and an endpoint,
+//It is only two points.
+//The radius is how wide the path is
+
 class Path {
 
     // A Path is an arraylist of points (PVector objects)
     ArrayList<Vector> points;
     // A path has a radius, i.e how far is it ok for the boid to wander off
-    float radius;
+    double radius;
 
     Path() {
         // Arbitrary radius of 20
         radius = 20;
         points = new ArrayList<Vector>();
+
+        //designate start and end point
+
+        Vector start = new Vector<>();
+        Vector end = new Vector<>();
+
+
     }
 
     // Add a point to the path
@@ -38,8 +50,12 @@ class Path {
         return points.get(points.size()-1);
     }
 
+
+
+
 /*
-    // Draw the path
+    // Draw the path This is pde code? Can be translated to android later,
+    //For now I will rely on playthrough testing unless it proves too buggy
     void display() {
         // Draw thick line for radius
         stroke(175);

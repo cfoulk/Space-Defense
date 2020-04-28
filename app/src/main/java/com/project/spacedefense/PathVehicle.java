@@ -14,6 +14,12 @@ import java.util.Vector;
 
 // Vehicle class
 
+
+
+//A vehicle can predict it's future position and react accordingly
+//It makes a copy of it's velocity
+//Normalizes it and looks 25 pixels ahead by scaling the vector up
+//Add vector too location to find the predicted location
 class PathVehicle {
 
   // All the usual stuff
@@ -25,23 +31,23 @@ class PathVehicle {
   double maxspeed;    // Maximum speed
 
     // Constructor initialize all values
-  /*PathVehicle( Vector l, float ms, float mf) {
+  PathVehicle( Vector l, float ms, float mf) {
     position = l.get();
     r = 4.0;
     maxspeed = ms;
     maxforce = mf;
     acceleration = new Vector(0, 0);
-    velocity = new Vector((int) maxspeed, 0); //TODO uncast first parameter from int
-  } */
+    velocity = new Vector((int) maxspeed, 0); //TODO uncast first parameter from int and back to float or double
+  }
 
   // Main "run" function
-  /*public void run() {
+  public void run() {
     update();
-    display();
-  } */
+ //   display();  //TODO change this to draw
+  }
 
 
-  /*
+
   // This function implements Craig Reynolds' path following algorithm
   // http://www.red3d.com/cwr/steer/PathFollow.html
   void follow(Path p) {
@@ -123,15 +129,15 @@ class PathVehicle {
   }
 
 
-   */
 
-  /*
 //TODO Convert this math funtion into a working java version
   // A function to get the normal point from a point (p) to a line segment (a-b)
   // This function could be optimized to make fewer new Vector objects
   Vector getNormalPoint(Vector p, Vector a, Vector b) {
     // Vector from a to p
+
     Vector ap = Vector.sub(p, a);
+
     // Vector from a to b
     Vector ab = Vector.sub(b, a);
     ab.normalize(); // Normalize the line
@@ -140,9 +146,8 @@ class PathVehicle {
     Vector normalPoint = Vector.add(a, ab);
     return normalPoint;
   }
-*/
 
-  /*
+
   // Method to update position
   void update() {
     // Update velocity
@@ -178,7 +183,7 @@ class PathVehicle {
 
       applyForce(steer);
   }
-*/
+
 
   /*
   void display() {
@@ -210,9 +215,9 @@ class PathVehicle {
    */
 
 
-/*
+
 }
-*/
+
 
 
 
