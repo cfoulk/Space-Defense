@@ -73,6 +73,7 @@ class Enemy {
 
 
     void move() {
+
         // Move the body
         // Start at the back and move it
         // to the position of the segment in front of it

@@ -100,6 +100,8 @@ class HUD {
         p.setTextSize(mTextFormatting);
 
 
+
+
         //c.drawText("Hi: " + gs.getHighScore(), mTextFormatting,mTextFormatting,p);
         //c.drawText("Scrore: " + gs.getScore(), mTextFormatting,mTextFormatting * 2,p);
         //c.drawText("Lives: " + gs.getNumShips(), mTextFormatting,mTextFormatting * 3,p);

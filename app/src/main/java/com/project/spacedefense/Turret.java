@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import java.util.Random;
@@ -72,6 +73,14 @@ public class Turret {
     void draw(Canvas canvas, Paint paint){
         canvas.drawBitmap(mBitmapApple,
                 this.location.x * this.mSize, this.location.y * this.mSize, paint);
+
+
+        // work in progress
+        Paint radius = new Paint();
+        radius.setStyle(Paint.Style.STROKE);
+        radius.setStrokeWidth(10);
+        radius.setColor(Color.WHITE);
+        canvas.drawCircle(this.location.x, this.location.y, 50, radius);
 
     }
 
