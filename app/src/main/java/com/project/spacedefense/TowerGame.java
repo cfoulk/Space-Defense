@@ -63,7 +63,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
     // A snake ssss
     private Base mBase;
-    private Enemy_n mEnemy_n;
+    private Enemy mEnemy;
     // And an apple
     private Turret mTurret;
 
@@ -129,7 +129,7 @@ class TowerGame extends SurfaceView implements Runnable{
         baseW = mBase.getWidth();
         baseH = mBase.getHeight();
 
-        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50, size, basePos, baseW, baseH, mBase);
+        mEnemy = new Enemy(context,100, 500, 60,60, 50, size, basePos, baseW, baseH, mBase);
 
     }
 
@@ -204,7 +204,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
 
        // mEnemy.move();
-        mEnemy_n.update();
+        mEnemy.update();
         baseHealth = mBase.getHealth();
 
     }
@@ -226,10 +226,10 @@ class TowerGame extends SurfaceView implements Runnable{
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
-            mPaint.setTextSize(120);
+            mPaint.setTextSize(100);
 
             // Draw the score
-            mCanvas.drawText("" + baseHealth, 20, 120, mPaint);
+            mCanvas.drawText("Base: " + baseHealth, 20, 120, mPaint);
             mHUD.draw(mCanvas, mPaint);
 
 
@@ -258,7 +258,7 @@ class TowerGame extends SurfaceView implements Runnable{
             pathPaint.setStrokeWidth(20);
 
             mCanvas.drawPath(sPath, pathPaint);
-            mEnemy_n.draw(mCanvas, mPaint);
+            mEnemy.draw(mCanvas, mPaint);
             mBase.draw(mCanvas, mPaint);
 
 

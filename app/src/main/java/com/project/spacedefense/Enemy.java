@@ -1,225 +1,96 @@
 package com.project.spacedefense;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 
-import java.util.ArrayList;
+public class Enemy {
 
-class Enemy {
+    private int speed = 25;
 
-    // The location in the grid of all the segments
-    private ArrayList<Point> segmentLocations;
+    private Boolean isAlive;
 
-    // How big is each segment of the snake?
-    private int mSegmentSize;
+    private int x, y, health;
 
-    // How big is the entire grid
-    private Point mMoveRange;
+    private int height, width;
 
-    // Where is the centre of the screen
-    // horizontally in pixels?
-    private int halfWayPoint;
-    private int leftSidePoint;
+    private Bitmap mEnemy;
 
-    // For tracking movement Heading
-    public enum Heading {
-        UP, RIGHT, DOWN, LEFT
+    //screen size
+    private Point ss;
+
+    private Point basePos;
+    private int baseW, baseH;
+    private Base mBase;
+
+
+
+    Enemy(Context context, int x, int y, int width, int height, int health, Point ss, Point basePos, int baseW, int baseH, Base mBase){
+
+        this.mBase = mBase;
+        isAlive = true;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.health = health;
+        this.ss = ss;
+        this.basePos = basePos;
+        this.baseW = baseW;
+        this.baseH = baseH;
+
+        mEnemy = BitmapFactory
+                .decodeResource(context.getResources(),
+                        R.drawable.alien_octo);
+
+        mEnemy = Bitmap
+                .createScaledBitmap(mEnemy, width, height, true);
     }
 
-    // Start by heading to the right
-    private Heading heading = Heading.RIGHT;
-
-    //private SnakeBody snakeBody;
-    private AlienInvader alienInvader;
-
-
-    Enemy(Context context, Point mr, int ss) {
-
-        // Initialize our ArrayList
-        segmentLocations = new ArrayList<>();
-
-        // Initialize the segment size and movement
-        // range from the passed in parameters
-        mSegmentSize = ss;
-        mMoveRange = mr;
-
-        // Create and scale the bitmaps
-        alienInvader = new AlienInvader(context, ss, mSegmentSize, mr, heading);
-        //snakeBody = new SnakeBody(context, ss, mSegmentSize);
-
-        // The halfway point across the screen in pixels
-        // Used to detect which side of screen was pressed
-        //halfWayPoint = mr.x * ss / 2;
-        halfWayPoint = mr.x * ss;
-        //leftSidePoint = mr.x * ss;
-    }
-
-    // Get the snake ready for a new game
-    void reset(int w, int h) {
-
-        // Reset the heading
-        heading = Heading.RIGHT;
-
-        // Delete the old contents of the ArrayList
-        segmentLocations.clear();
-
-        // Start with a single snake segment
-        segmentLocations.add(new Point(w / 10, h / 2));
-        //TODO this starts the path of enemy on far left side of path
-
-    }
-
-
-    void move() {
-
-        // Move the body
-        // Start at the back and move it
-        // to the position of the segment in front of it
-        for (int i = segmentLocations.size() - 1; i > 0; i--) {
-
-            // Make it the same value as the next segment
-            // going forwards towards the head
-            segmentLocations.get(i).x = segmentLocations.get(i - 1).x;
-            segmentLocations.get(i).y = segmentLocations.get(i - 1).y;
+    void update(){
+        if (isAlive){
+            move();
+            checkBaseCollision();
         }
 
-        // Move the head in the appropriate heading
-        // Get the existing head position
-        Point p = segmentLocations.get(0);
-
-        /*if ((p.y == 500) && (p.x == 1000)){
-            p.y = p.y + 10;
-        }
-        if ((p.y == 750) && (p.x == 1000)){
-            p.x = p.x + 10;
-        }
-        if ((p.y == 500) && (p.x == 1000)){
-            p.x = p.x + 10;
-        }
-        if ((p.y == 500) && (p.x == 1000)){
-            p.x = p.x + 10;
-        }*/
-
-        // Move it appropriately
-        switch (heading) {
-            case UP:
-                p.y--;
-                break;
-
-            case RIGHT:
-                p.x++;
-                break;
-
-            case DOWN:
-                p.y++;
-                break;
-
-            case LEFT:
-                p.x--;
-                break;
-        }
-
-    }
-
-    //Old code
-    boolean detectDeath() { //TODO convert this into detect space base collision (enemies won)
-        // Has the snake died?
-        boolean dead = false;
-
-        // Hit any of the screen edges
-        if (segmentLocations.get(0).x == -1 ||
-                segmentLocations.get(0).x > mMoveRange.x ||
-                segmentLocations.get(0).y == -1 ||
-                segmentLocations.get(0).y > mMoveRange.y) {
-
-            dead = true;
-        }
-
-        // Eaten itself?
-        for (int i = segmentLocations.size() - 1; i > 0; i--) {
-            // Have any of the sections collided with the head
-            if (segmentLocations.get(0).x == segmentLocations.get(i).x &&
-                    segmentLocations.get(0).y == segmentLocations.get(i).y) {
-
-                dead = true;
-            }
-        }
-        return dead;
-    }
-
-    //Old code will not be used
-    boolean checkDinner(Point l, Turret mTurret) {
-        //if (snakeXs[0] == l.x && snakeYs[0] == l.y) {
-        if (segmentLocations.get(0).x == l.x &&
-                segmentLocations.get(0).y == l.y) {
-
-            // Add a new Point to the list
-            // located off-screen.
-            // This is OK because on the next call to
-            // move it will take the position of
-            // the segment in front of it
-
-            if(mTurret.getStatus() != 0){
-                segmentLocations.add(new Point(-10, -10));
-            }
-            //segmentLocations.add(new Point(-10, -10));
-            return true;
-        }
-        return false;
     }
 
 
     void draw(Canvas canvas, Paint paint) {
+        canvas.drawBitmap(mEnemy,x - (width/2),y - (height/2),paint);
+    }
 
-        // Don't run this code if ArrayList has nothing in it
-        if (!segmentLocations.isEmpty()) {
+    void move(){
 
-            alienInvader.draw(segmentLocations, canvas, paint);
-            //snakeBody.draw(segmentLocations, canvas, paint);
-
+        if ((y == 500) && (x < 1000)){
+            x = x + speed;
+        }
+        if ((y < 750) && (x == 1000)){
+            y = y + speed;
+        }
+        //the enemy always stops at the end of the screen, where the base will be
+        if ((y == 750) && (x < ss.x)){
+            x = x + speed;
         }
     }
 
+    private void checkBaseCollision(){
+        if(x + width > basePos.x && x < basePos.x + baseW && y + height > basePos.y && y < basePos.y + baseH){
+            isAlive = false;
 
-    // Handle changing direction
-    /*void switchHeading(MotionEvent motionEvent) {
-
-        // Is the tap on the right hand side?
-        if (motionEvent.getX() >= halfWayPoint) {
-            switch (heading) {
-                // Rotate right
-                case UP:
-                    heading = Heading.RIGHT;
-                    break;
-                case RIGHT:
-                    heading = Heading.DOWN;
-                    break;
-                case DOWN:
-                    heading = Heading.LEFT;
-                    break;
-                case LEFT:
-                    heading = Heading.UP;
-                    break;
-
-            }
-        } else {
-            // Rotate left
-            switch (heading) {
-                case UP:
-                    heading = Heading.LEFT;
-                    break;
-                case LEFT:
-                    heading = Heading.DOWN;
-                    break;
-                case DOWN:
-                    heading = Heading.RIGHT;
-                    break;
-                case RIGHT:
-                    heading = Heading.UP;
-                    break;
-            }
+            mBase.setHealth();
         }
-    } */
+    }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
+    //collisions take away health
+    public void removeHealth(int t){
+        health -= t;
+    }
 }
