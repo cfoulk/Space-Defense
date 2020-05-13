@@ -57,8 +57,11 @@ class TowerGame extends SurfaceView implements Runnable{
     private Paint mPaint;
 
     private Point size;
+    private Point basePos;
+    private int baseW, baseH;
 
     // A snake ssss
+    private Base mBase;
     private Enemy mEnemy;
     private Enemy_n mEnemy_n;
     // And an apple
@@ -121,14 +124,15 @@ class TowerGame extends SurfaceView implements Runnable{
 
 
 
+        mBase = new Base(context, size);
 
 
-        mEnemy = new Enemy(context,
-                new Point(NUM_BLOCKS_WIDE,
-                        mNumBlocksHigh),
-                blockSize);
 
-        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50, size);
+        basePos = mBase.getPosition();
+        baseW = mBase.getWidth();
+        baseH = mBase.getHeight();
+
+        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50, size, basePos, baseW, baseH);
 
     }
 
@@ -137,7 +141,7 @@ class TowerGame extends SurfaceView implements Runnable{
     public void newGame() {
 
         // reset the snake
-        mEnemy.reset(NUM_BLOCKS_WIDE, mNumBlocksHigh);
+//        mEnemy.reset(NUM_BLOCKS_WIDE, mNumBlocksHigh);
 
         // Get the apple ready for dinner
 
@@ -203,10 +207,10 @@ class TowerGame extends SurfaceView implements Runnable{
 
 
        // mEnemy.move();
-        mEnemy_n.move();
+        mEnemy_n.update();
 
 
-        if(mEnemy.checkDinner(mTurret.getLocation(), mTurret)){
+        /*if(mEnemy.checkDinner(mTurret.getLocation(), mTurret)){
 
             mTurret.spawn();
 
@@ -239,7 +243,7 @@ class TowerGame extends SurfaceView implements Runnable{
                 mScore -= 2;
             }
 
-        }
+        }*/
 
 
 
@@ -282,6 +286,8 @@ class TowerGame extends SurfaceView implements Runnable{
             mCanvas.drawText("" + mScore, 20, 120, mPaint);
             mHUD.draw(mCanvas, mPaint);
 
+
+
             // Draw the apple and the snake
 
             mTurret.draw(mCanvas, mPaint);
@@ -308,6 +314,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
             mCanvas.drawPath(sPath, pathPaint);
             mEnemy_n.draw(mCanvas, mPaint);
+            mBase.draw(mCanvas, mPaint);
 
 
             // Draw some text while paused

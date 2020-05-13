@@ -11,6 +11,8 @@ public class Enemy_n {
 
     private int speed = 25;
 
+    private Boolean isAlive;
+
     private int x, y, health;
 
     private int height, width;
@@ -20,27 +22,42 @@ public class Enemy_n {
     //screen size
     private Point ss;
 
+    private Point basePos;
+    private int baseW, baseH;
 
 
-    Enemy_n(Context context, int x, int y, int width, int height, int health, Point ss){
+
+    Enemy_n(Context context, int x, int y, int width, int height, int health, Point ss, Point basePos, int baseW, int baseH){
+
+        isAlive = true;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.health = health;
         this.ss = ss;
+        this.basePos = basePos;
+        this.baseW = baseW;
+        this.baseH = baseH;
 
         mEnemy = BitmapFactory
                 .decodeResource(context.getResources(),
                         R.drawable.alien_octo);
+
         mEnemy = Bitmap
                 .createScaledBitmap(mEnemy, width, height, true);
+    }
+
+    void update(){
+        if (isAlive){
+            move();
+        }
+        checkBaseCollision();
     }
 
 
     void draw(Canvas canvas, Paint paint) {
         canvas.drawBitmap(mEnemy,x - (width/2),y - (height/2),paint);
-
     }
 
     void move(){
@@ -51,19 +68,24 @@ public class Enemy_n {
         if ((y < 750) && (x == 1000)){
             y = y + speed;
         }
-
         //the enemy always stops at the end of the screen, where the base will be
         if ((y == 750) && (x < ss.x)){
             x = x + speed;
         }
+    }
 
-
+    private void checkBaseCollision(){
+        if(x + width > basePos.x && x < basePos.x + baseW && y + height > basePos.y && y < basePos.y + baseH){
+            isAlive = false;
+        }
     }
 
     public void setSpeed(int speed){
         this.speed = speed;
     }
 
-
-
+    //collisions take away health
+    public void removeHealth(int t){
+        health -= t;
+    }
 }
