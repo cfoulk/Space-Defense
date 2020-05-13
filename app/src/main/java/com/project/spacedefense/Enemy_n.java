@@ -24,11 +24,13 @@ public class Enemy_n {
 
     private Point basePos;
     private int baseW, baseH;
+    private Base mBase;
 
 
 
-    Enemy_n(Context context, int x, int y, int width, int height, int health, Point ss, Point basePos, int baseW, int baseH){
+    Enemy_n(Context context, int x, int y, int width, int height, int health, Point ss, Point basePos, int baseW, int baseH, Base mBase){
 
+        this.mBase = mBase;
         isAlive = true;
         this.x = x;
         this.y = y;
@@ -77,6 +79,8 @@ public class Enemy_n {
     private void checkBaseCollision(){
         if(x + width > basePos.x && x < basePos.x + baseW && y + height > basePos.y && y < basePos.y + baseH){
             isAlive = false;
+
+            mBase.setHealth();
         }
     }
 

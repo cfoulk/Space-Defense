@@ -76,11 +76,7 @@ public class Turret {
 
 
         // work in progress
-        Paint radius = new Paint();
-        radius.setStyle(Paint.Style.STROKE);
-        radius.setStrokeWidth(10);
-        radius.setColor(Color.WHITE);
-        canvas.drawCircle(this.location.x, this.location.y, 50, radius);
+
 
     }
 

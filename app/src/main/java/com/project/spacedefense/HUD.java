@@ -130,7 +130,7 @@ class HUD {
     }
 
     private void drawControls(Canvas c, Paint p){
-        p.setColor(Color.argb(100,50,255,255));
+        p.setColor(Color.argb(255,50,255,255));
 
         //Drawable d = context.getResources().getDrawable(R.drawable.alien_octo);
         //d.setBounds(pause);

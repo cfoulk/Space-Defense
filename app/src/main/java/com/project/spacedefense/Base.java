@@ -27,6 +27,7 @@ public class Base {
 
         height = 100;
         width = 100;
+        health = 500;
 
         position = new Point(ss.x - width, 750);
 
@@ -59,5 +60,9 @@ public class Base {
 
     public int getWidth(){
         return width;
+    }
+
+    public int getHealth(){
+        return health;
     }
 }

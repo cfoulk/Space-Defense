@@ -59,14 +59,14 @@ class TowerGame extends SurfaceView implements Runnable{
     private Point size;
     private Point basePos;
     private int baseW, baseH;
+    private int baseHealth;
 
     // A snake ssss
     private Base mBase;
-    private Enemy mEnemy;
     private Enemy_n mEnemy_n;
     // And an apple
     private Turret mTurret;
-    private Turret mTurret2;
+
     HUD mHUD;
 
     private Bitmap mBackground;
@@ -117,10 +117,7 @@ class TowerGame extends SurfaceView implements Runnable{
                 .mBitMapTurrets()
                 .build();
 
-        mTurret2 = new Turret.TurretBuilder(
-                context, new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh), blockSize)
-                .mBitMapTurrets()
-                .build();
+
 
 
 
@@ -132,7 +129,7 @@ class TowerGame extends SurfaceView implements Runnable{
         baseW = mBase.getWidth();
         baseH = mBase.getHeight();
 
-        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50, size, basePos, baseW, baseH);
+        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50, size, basePos, baseW, baseH, mBase);
 
     }
 
@@ -145,8 +142,8 @@ class TowerGame extends SurfaceView implements Runnable{
 
         // Get the apple ready for dinner
 
-        mTurret.spawn();
-        mTurret2.spawn();
+        //mTurret.spawn();
+
 
         // Reset the mScore
         mScore = 0;
@@ -180,7 +177,7 @@ class TowerGame extends SurfaceView implements Runnable{
     public boolean updateRequired() {
 
         // Run at 10 frames per second
-        final long TARGET_FPS = 20;
+        final long TARGET_FPS = 25;
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
 
@@ -208,44 +205,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
        // mEnemy.move();
         mEnemy_n.update();
-
-
-        /*if(mEnemy.checkDinner(mTurret.getLocation(), mTurret)){
-
-            mTurret.spawn();
-
-            // Add to  mScore
-            if(mTurret.getStatus() == 1){
-                mScore += 1;
-            } else if(mTurret.getStatus() == 2){
-                mScore += 2;
-            } else if(mTurret.getStatus() == 3){
-                mScore += 3;
-            } else {
-                mScore -= 2;
-            }
-
-            mPaused =true;
-        }
-
-        if(mEnemy.checkDinner(mTurret2.getLocation(), mTurret2)){
-            mTurret2.spawn();
-
-//TODO GET THIS CODE INTEGRATED WHEN LOGIC IS FIGURED OUT BELOW
-            // remove 2 for bad apple
-            if(mTurret2.getStatus() == 1){
-                mScore += 1;
-            } else if(mTurret2.getStatus() == 2){
-                mScore += 2;
-            } else if(mTurret2.getStatus() == 3){
-                mScore += 3;
-            } else {
-                mScore -= 2;
-            }
-
-        }*/
-
-
+        baseHealth = mBase.getHealth();
 
     }
 
@@ -260,38 +220,23 @@ class TowerGame extends SurfaceView implements Runnable{
         // Get a lock on the mCanvas
         if (mSurfaceHolder.getSurface().isValid()) {
 
-
-
-
             mCanvas = mSurfaceHolder.lockCanvas();
 
-
-            mBackground = BitmapFactory
-                    .decodeResource(context.getResources(),
-                            R.drawable.purple_abyss);
-            //mBackground = Bitmap
-                   // .createScaledBitmap(mBackground, size.x, size.y, true);
-
-            // Fill the screen with a color
-            //mCanvas.drawBitmap(mBackground, size.x, size.y, mPaint);
             mCanvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_background), NUM_BLOCKS_WIDE, mNumBlocksHigh, mPaint);
-
-
 
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(120);
 
             // Draw the score
-            mCanvas.drawText("" + mScore, 20, 120, mPaint);
+            mCanvas.drawText("" + baseHealth, 20, 120, mPaint);
             mHUD.draw(mCanvas, mPaint);
-
 
 
             // Draw the apple and the snake
 
-            mTurret.draw(mCanvas, mPaint);
-            mTurret2.draw(mCanvas,mPaint);
+            //mTurret.draw(mCanvas, mPaint);
+
             //mEnemy.draw(mCanvas, mPaint);
 
 
