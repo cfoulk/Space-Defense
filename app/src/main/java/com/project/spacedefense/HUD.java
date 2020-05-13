@@ -1,12 +1,17 @@
 package com.project.spacedefense;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.content.res.AssetManager;
+
+
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 
@@ -16,6 +21,7 @@ class HUD {
     private int mScreenWidth;
 
     private ArrayList<Rect> controls;
+
 
     static int UP = 0;
     static int DOWN = 1;
@@ -82,6 +88,10 @@ class HUD {
                 buttonPadding + buttonHeight);
 
 
+
+
+
+
         controls = new ArrayList<>();
         /*controls.add(UP,up);
         controls.add(DOWN,down);
@@ -115,17 +125,28 @@ class HUD {
             p.setTextSize(mTextFormatting * 5);
             c.drawText("PAUSED", mScreenWidth /3, mScreenHeight /2 ,p);
         } */
-        drawControls(c, p);
+
+
     }
 
     private void drawControls(Canvas c, Paint p){
         p.setColor(Color.argb(100,50,255,255));
+
+        //Drawable d = context.getResources().getDrawable(R.drawable.alien_octo);
+        //d.setBounds(pause);
+
 
         for(Rect r : controls){
             c.drawRect(r.left, r.top, r.right, r.bottom, p);
 
 
         }
+
+
+
+        //d.setBounds(controls.get(1));
+        //d.draw(c);
+
 
         // Set the colors back
         p.setColor(Color.argb(255,255,255,255));

@@ -57,6 +57,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
     // A snake ssss
     private Enemy mEnemy;
+    private Enemy_n mEnemy_n;
     // And an apple
     private Turret mTurret;
     private Turret mTurret2;
@@ -118,6 +119,8 @@ class TowerGame extends SurfaceView implements Runnable{
                         mNumBlocksHigh),
                 blockSize);
 
+        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50);
+
     }
 
 
@@ -164,7 +167,7 @@ class TowerGame extends SurfaceView implements Runnable{
     public boolean updateRequired() {
 
         // Run at 10 frames per second
-        final long TARGET_FPS = 10;
+        final long TARGET_FPS = 20;
         // There are 1000 milliseconds in a second
         final long MILLIS_PER_SECOND = 1000;
 
@@ -191,6 +194,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
 
         mEnemy.move();
+        mEnemy_n.move();
 
 
         if(mEnemy.checkDinner(mTurret.getLocation(), mTurret)){
@@ -245,7 +249,7 @@ class TowerGame extends SurfaceView implements Runnable{
             mCanvas = mSurfaceHolder.lockCanvas();
 
             // Fill the screen with a color
-            mCanvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_background), NUM_BLOCKS_WIDE, mNumBlocksHigh, mPaint);
+            mCanvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.purple_abyss), NUM_BLOCKS_WIDE, mNumBlocksHigh, mPaint);
 
 
 
@@ -263,11 +267,14 @@ class TowerGame extends SurfaceView implements Runnable{
             mTurret2.draw(mCanvas,mPaint);
             mEnemy.draw(mCanvas, mPaint);
 
+
+
             Path sPath = new Path();
             sPath.moveTo(100, 500);
             sPath.lineTo(1000, 500);
             sPath.lineTo(1000, 750);
             sPath.lineTo(2000,750);
+
 
 
 
@@ -279,7 +286,8 @@ class TowerGame extends SurfaceView implements Runnable{
             pathPaint.setStrokeWidth(20);
 
             mCanvas.drawPath(sPath, pathPaint);
-            //mCanvas.drawCircle(100,100,20,pathPaint);
+            mEnemy_n.draw(mCanvas, mPaint);
+
 
             // Draw some text while paused
             if(mPaused){

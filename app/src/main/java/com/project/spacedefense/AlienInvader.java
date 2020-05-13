@@ -80,6 +80,9 @@ class AlienInvader {
 
 
 
+
+
+
     public void draw(ArrayList<Point> segmentLocations, Canvas canvas, Paint paint) {
 
         switch (heading) {

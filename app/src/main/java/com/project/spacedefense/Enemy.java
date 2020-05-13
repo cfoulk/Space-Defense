@@ -89,6 +89,19 @@ class Enemy {
         // Get the existing head position
         Point p = segmentLocations.get(0);
 
+        /*if ((p.y == 500) && (p.x == 1000)){
+            p.y = p.y + 10;
+        }
+        if ((p.y == 750) && (p.x == 1000)){
+            p.x = p.x + 10;
+        }
+        if ((p.y == 500) && (p.x == 1000)){
+            p.x = p.x + 10;
+        }
+        if ((p.y == 500) && (p.x == 1000)){
+            p.x = p.x + 10;
+        }*/
+
         // Move it appropriately
         switch (heading) {
             case UP:
