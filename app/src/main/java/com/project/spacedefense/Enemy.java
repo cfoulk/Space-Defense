@@ -51,6 +51,7 @@ public class Enemy {
     }
 
     void update(){
+        checkHealth();
         if (isAlive){
             move();
             checkBaseCollision();
@@ -75,6 +76,13 @@ public class Enemy {
         if ((y == 750) && (x < ss.x)){
             x = x + speed;
         }
+    }
+
+    void checkHealth(){
+        if(health <= 0){
+            isAlive = false;
+        }
+        isAlive = true;
     }
 
     private void checkBaseCollision(){

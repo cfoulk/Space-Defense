@@ -75,7 +75,7 @@ class TowerGame extends SurfaceView implements Runnable{
     private AssetManager assetManager;
 
     // This is the constructor method that gets called
-    // from SnakeActivity
+    // from GameActivity
     public TowerGame(Context context, Point size) throws IOException {
         super(context);
 
