@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Point;
 
 public class Enemy_n {
 
@@ -16,14 +17,18 @@ public class Enemy_n {
 
     private Bitmap mEnemy;
 
+    //screen size
+    private Point ss;
 
 
-    public Enemy_n(Context context, int x, int y, int width, int height, int health){
+
+    Enemy_n(Context context, int x, int y, int width, int height, int health, Point ss){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.health = health;
+        this.ss = ss;
 
         mEnemy = BitmapFactory
                 .decodeResource(context.getResources(),
@@ -33,12 +38,12 @@ public class Enemy_n {
     }
 
 
-    public void draw(Canvas canvas, Paint paint) {
+    void draw(Canvas canvas, Paint paint) {
         canvas.drawBitmap(mEnemy,x - (width/2),y - (height/2),paint);
 
     }
 
-    public void move(){
+    void move(){
 
         if ((y == 500) && (x < 1000)){
             x = x + speed;
@@ -46,9 +51,12 @@ public class Enemy_n {
         if ((y < 750) && (x == 1000)){
             y = y + speed;
         }
-        if ((y == 750) && (x < 2000)){
+
+        //the enemy always stops at the end of the screen, where the base will be
+        if ((y == 750) && (x < ss.x)){
             x = x + speed;
         }
+
 
     }
 

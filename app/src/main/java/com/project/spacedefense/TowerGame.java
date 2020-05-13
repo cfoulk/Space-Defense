@@ -9,6 +9,7 @@ package com.project.spacedefense;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -55,6 +56,8 @@ class TowerGame extends SurfaceView implements Runnable{
     private SurfaceHolder mSurfaceHolder;
     private Paint mPaint;
 
+    private Point size;
+
     // A snake ssss
     private Enemy mEnemy;
     private Enemy_n mEnemy_n;
@@ -62,6 +65,8 @@ class TowerGame extends SurfaceView implements Runnable{
     private Turret mTurret;
     private Turret mTurret2;
     HUD mHUD;
+
+    private Bitmap mBackground;
 
 
     private AssetManager assetManager;
@@ -71,7 +76,11 @@ class TowerGame extends SurfaceView implements Runnable{
     public TowerGame(Context context, Point size) throws IOException {
         super(context);
 
+        this.size = size;
+
         mHUD = new HUD(size);
+
+
 
 
 
@@ -119,7 +128,7 @@ class TowerGame extends SurfaceView implements Runnable{
                         mNumBlocksHigh),
                 blockSize);
 
-        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50);
+        mEnemy_n = new Enemy_n(context,100, 500, 60,60, 50, size);
 
     }
 
@@ -193,7 +202,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
 
 
-        mEnemy.move();
+       // mEnemy.move();
         mEnemy_n.move();
 
 
@@ -246,10 +255,22 @@ class TowerGame extends SurfaceView implements Runnable{
     public void draw() {
         // Get a lock on the mCanvas
         if (mSurfaceHolder.getSurface().isValid()) {
+
+
+
+
             mCanvas = mSurfaceHolder.lockCanvas();
 
+
+            mBackground = BitmapFactory
+                    .decodeResource(context.getResources(),
+                            R.drawable.purple_abyss);
+            //mBackground = Bitmap
+                   // .createScaledBitmap(mBackground, size.x, size.y, true);
+
             // Fill the screen with a color
-            mCanvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.purple_abyss), NUM_BLOCKS_WIDE, mNumBlocksHigh, mPaint);
+            //mCanvas.drawBitmap(mBackground, size.x, size.y, mPaint);
+            mCanvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_background), NUM_BLOCKS_WIDE, mNumBlocksHigh, mPaint);
 
 
 
@@ -265,15 +286,15 @@ class TowerGame extends SurfaceView implements Runnable{
 
             mTurret.draw(mCanvas, mPaint);
             mTurret2.draw(mCanvas,mPaint);
-            mEnemy.draw(mCanvas, mPaint);
+            //mEnemy.draw(mCanvas, mPaint);
 
 
 
             Path sPath = new Path();
-            sPath.moveTo(100, 500);
+            sPath.moveTo(0, 500);
             sPath.lineTo(1000, 500);
             sPath.lineTo(1000, 750);
-            sPath.lineTo(2000,750);
+            sPath.lineTo(size.x,750);
 
 
 
