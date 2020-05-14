@@ -30,7 +30,7 @@ class EnemyWave {
         enemyList = new ArrayList<>();
     }
 
-    void update(Canvas canvas, Paint paint) {
+    void update() {
 
 
         if((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime && (spawned < enemies)){
@@ -41,41 +41,16 @@ class EnemyWave {
             spawned += 1;
         }
 
-        /*while (spawned < enemies) {
-
-            if ((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime) {
-                enemyList.add(new Enemy(context, 100, 500, 60, 60, 50, size, mBase));
-                System.out.println("New enemy");
-                timeSinceLastSpawn = System.currentTimeMillis();
-                spawned += 1;
-            }
-
-
-            for(Enemy e: enemyList){
-                System.out.println("update?");
-                e.update();
-                e.draw(canvas, paint);
-            }
-        }*/
-
         for(Enemy e: enemyList) {
-            //System.out.println("draw?");
-            e.update();
-            //e.draw(canvas, paint);
-        }
-        //move();
-    }
-
-    void move(){
-        for(Enemy e: enemyList) {
-            //System.out.println("update?");
             e.update();
         }
+
     }
+
+
 
     void draw(Canvas canvas, Paint paint){
         for(Enemy e: enemyList) {
-            //System.out.println("draw?");
             e.draw(canvas, paint);
         }
     }

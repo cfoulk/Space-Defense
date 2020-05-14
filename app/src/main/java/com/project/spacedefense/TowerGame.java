@@ -201,7 +201,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
        // mEnemy.move();
         //mEnemy.update();
-        mEnemyWave.update(mCanvas, mPaint);
+        mEnemyWave.update();
         baseHealth = mBase.getHealth();
 
     }
