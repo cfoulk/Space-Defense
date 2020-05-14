@@ -197,17 +197,12 @@ class TowerGame extends SurfaceView implements Runnable{
     // Update all the game objects
     public void update() throws IOException {
 
-
-
-       // mEnemy.move();
-        //mEnemy.update();
         mEnemyWave.update();
         baseHealth = mBase.getHealth();
 
     }
 
     Context context;
-
     {
         context = getContext();
     }
@@ -227,6 +222,8 @@ class TowerGame extends SurfaceView implements Runnable{
 
             // Draw the score
             mCanvas.drawText("Base: " + baseHealth, 20, 120, mPaint);
+            mPaint.setTextSize(70);
+            mCanvas.drawText("Enemies left: " + mEnemyWave.getRemaining(), 20, 200, mPaint);
             mHUD.draw(mCanvas, mPaint);
 
 

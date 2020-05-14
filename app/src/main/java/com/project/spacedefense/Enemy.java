@@ -64,7 +64,7 @@ public class Enemy {
         }
     }
 
-    void move(){
+    private void move(){
 
         if ((y == 500) && (x < 1000)){
             x = x + speed;

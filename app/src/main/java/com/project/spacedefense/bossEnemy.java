@@ -8,7 +8,7 @@ import android.graphics.Point;
 class bossEnemy extends Enemy {
     bossEnemy(Context context, int x, int y, int width, int height, int health, Point ss, Base mBase) {
         super(context, x, y, width, height, health, ss, mBase);
-        
+
         this.health = 100;
 
         mEnemy = BitmapFactory

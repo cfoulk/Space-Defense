@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 class EnemyWave {
 
-    private int enemies, spawned;
+    private int enemies, spawned, enemiesDead;
     private long timeSinceLastSpawn, spawnTime;
 
     private boolean waveComplete, allDead;
@@ -55,6 +55,7 @@ class EnemyWave {
                 e.update();
             } else {
                 enemyList.remove(e);
+                enemiesDead += 1;
             }
         }
 
@@ -68,6 +69,10 @@ class EnemyWave {
 
     public CopyOnWriteArrayList getEnemyList(){
         return enemyList;
+    }
+
+    public int getRemaining(){
+        return enemies - enemiesDead;
     }
 
 }
