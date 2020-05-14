@@ -59,7 +59,9 @@ public class Enemy {
 
 
     void draw(Canvas canvas, Paint paint) {
-        canvas.drawBitmap(mEnemy,x - (width/2),y - (height/2),paint);
+        if(isAlive) {
+            canvas.drawBitmap(mEnemy, x - (width / 2), y - (height / 2), paint);
+        }
     }
 
     void move(){
@@ -98,5 +100,6 @@ public class Enemy {
     //collisions take away health
     public void removeHealth(int t){
         health -= t;
+        checkHealth();
     }
 }
