@@ -27,9 +27,10 @@ class HUD {
     static int DOWN = 1;
     static int FLIP = 2;
     static int SHOOT = 3;
-    static int PAUSE = 0;
+    static int TOWER0 = 0;
     static int TOWER1 = 1;
     static int TOWER2 = 2;
+    static int PAUSE = 3;
 
     HUD(Point size){
         mScreenHeight = size.y;
@@ -44,7 +45,7 @@ class HUD {
         int buttonHeight = mScreenHeight / 12;
         int buttonPadding = mScreenWidth / 90;
 
-        /*Rect up = new Rect(
+        /*Rect tower0 = new Rect(
                 buttonPadding,
                 mScreenHeight - (buttonHeight * 2) - (buttonPadding * 2),
                 buttonWidth + buttonPadding,
@@ -61,15 +62,17 @@ class HUD {
                 mScreenWidth - buttonPadding,
                 mScreenHeight - buttonPadding
 
-        );
+        );*/
 
-        Rect shoot = new Rect(mScreenWidth - buttonPadding - buttonWidth,
+        Rect pause = new Rect(mScreenWidth - buttonPadding - buttonWidth,
                 mScreenHeight - (buttonHeight * 2) - (buttonPadding * 2),
                 mScreenWidth - buttonPadding,
                 mScreenHeight - buttonHeight - (buttonPadding *2)
-        ); */
+        );
 
-        Rect pause = new Rect(
+
+
+        Rect tower0 = new Rect(
                 mScreenWidth - buttonPadding - buttonWidth,
                 buttonPadding,
                 mScreenWidth - buttonPadding,
@@ -78,13 +81,13 @@ class HUD {
         Rect tower1 = new Rect(
                 mScreenWidth - (buttonPadding * 2) - (buttonWidth * 2) ,
                 buttonPadding,
-                mScreenWidth - buttonPadding,
+                mScreenWidth - (buttonPadding),
                 buttonPadding + buttonHeight);
 
         Rect tower2 = new Rect(
                 mScreenWidth - (buttonPadding * 3) - (buttonWidth * 3),
                 buttonPadding,
-                mScreenWidth - buttonPadding,
+                mScreenWidth - (buttonPadding),
                 buttonPadding + buttonHeight);
 
 
@@ -97,9 +100,10 @@ class HUD {
         controls.add(DOWN,down);
         controls.add(FLIP, flip);
         controls.add(SHOOT, shoot);*/
-        controls.add(PAUSE, pause);
+        controls.add(TOWER0, tower0);
         controls.add(TOWER1, tower1);
         controls.add(TOWER2, tower2);
+        controls.add(PAUSE, pause);
     }
 
     //GameState gs
@@ -111,6 +115,7 @@ class HUD {
 
 
 
+        drawControls(c, p);
 
         //c.drawText("Hi: " + gs.getHighScore(), mTextFormatting,mTextFormatting,p);
         //c.drawText("Scrore: " + gs.getScore(), mTextFormatting,mTextFormatting * 2,p);
@@ -130,24 +135,20 @@ class HUD {
     }
 
     private void drawControls(Canvas c, Paint p){
-        p.setColor(Color.argb(255,50,255,255));
-
-        //Drawable d = context.getResources().getDrawable(R.drawable.alien_octo);
-        //d.setBounds(pause);
-
-
-        for(Rect r : controls){
+        p.setColor(Color.argb(100,50,255,255));
+        c.drawRect(controls.get(0), p);
+        p.setColor(Color.argb(100,255,0,0));
+        c.drawRect(controls.get(1), p);
+        p.setColor(Color.argb(100,255,255,50));
+        c.drawRect(controls.get(2), p);
+        p.setColor(Color.argb(100,255,255,255));
+        c.drawRect(controls.get(3), p);
+        /*for(Rect r : controls){
             c.drawRect(r.left, r.top, r.right, r.bottom, p);
 
 
-        }
-
-
-
-        //d.setBounds(controls.get(1));
-        //d.draw(c);
-
-
+        }*/
+        
         // Set the colors back
         p.setColor(Color.argb(255,255,255,255));
     }

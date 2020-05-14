@@ -8,11 +8,12 @@ import android.graphics.Paint;
 
 public class Projectile {
 
-    private int x, y, damage, width, height;
+    int x, y, damage;
+    int height, width;
     float firingSpeed, timeSinceLastShot, xVelocity, yVelocity;
-    private Bitmap mProjectile;
-    private Enemy target;
-    private boolean isAlive;
+    Bitmap mProjectile;
+    Enemy target;
+    boolean isAlive;
 
     Projectile(Context context, Enemy target, int x, int y, int damage){
 
@@ -26,13 +27,6 @@ public class Projectile {
         this.target = target;
         this.xVelocity = 0f;
         this.yVelocity = 0f;
-
-        mProjectile = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.fireball);
-
-        mProjectile = Bitmap
-                .createScaledBitmap(mProjectile, width, height, true);
 
         calculateDirection();
 
@@ -68,7 +62,7 @@ public class Projectile {
         canvas.drawBitmap(mProjectile, x - (width / 2), y - (height / 2), paint);
     }
 
-    private void checkEnemyCollision(){
+    void checkEnemyCollision(){
         if(x + width > target.x && x < target.x + target.getWidth() && y + height > target.y && y < target.y + target.getHeight()){
             isAlive = false;
 
@@ -79,6 +73,9 @@ public class Projectile {
     }
 
     public boolean getStatus(){
-        return isAlive;
+        if(target.getStatus()) {
+            return isAlive;
+        }
+        return false;
     }
 }

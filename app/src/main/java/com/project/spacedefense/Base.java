@@ -54,6 +54,10 @@ public class Base {
         return position;
     }
 
+    public void reset(){
+        health = 500;
+    }
+
     public int getHeight(){
         return height;
     }

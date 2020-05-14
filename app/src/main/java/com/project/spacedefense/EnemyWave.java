@@ -73,4 +73,11 @@ class EnemyWave {
         return enemies - enemiesDead;
     }
 
+    public void reset(){
+        enemyList.clear();
+        enemies = 10;
+        spawned = 0;
+        enemiesDead = 0;
+    }
+
 }

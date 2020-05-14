@@ -11,7 +11,7 @@ public class GameObject extends TowerGame {
     Point point;
     Context context;
     int blockSize;
-    Turret turret;
+    //Turret turret;
 
     int status;
     Point size;

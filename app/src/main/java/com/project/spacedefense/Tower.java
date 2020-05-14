@@ -12,16 +12,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Tower {
 
-    private int x,y, width, height, damage, range;
-    private long firingSpeed, timeSinceLastShot;
+    int x,y,range, health;
+    int width, height, damage;
+    long timeSinceLastShot;
     private float angle;
+    long firingSpeed;
 
-    private Context context;
+    Context context;
 
-    private Bitmap mTower, mCannon;
-    private ArrayList<Projectile> projectiles;
+    Bitmap mTower, mCannon;
+    ArrayList<Projectile> projectiles;
     private CopyOnWriteArrayList<Enemy> enemies;
-    private Enemy target;
+    Enemy target;
     private EnemyWave mEnemyWave;
     private boolean targeted;
     //private Matrix m;
@@ -34,26 +36,11 @@ public class Tower {
         this.y = y;
         this.width = 75;
         this.height = 75;
-        this.damage = 15;
         this.range = 900;
         this.mEnemyWave = mEnemyWave;
         this.enemies = mEnemyWave.getEnemyList();
         this.targeted = false;
-        //this.target = getTarget();
-        //this.angle = calculateAngle();
-
-        this.firingSpeed = 2000;
-
         this.projectiles = new ArrayList<>();
-
-
-        mTower = BitmapFactory
-                .decodeResource(context.getResources(),
-                        R.drawable.redtower);
-
-        mTower = Bitmap
-                .createScaledBitmap(mTower, width, height, true);
-        
 
 
     }
@@ -97,7 +84,7 @@ public class Tower {
         return 0;
     }
 
-    private void shoot(){
+    void shoot(){
         //timeSinceLastShot = 0;
         projectiles.add(new Projectile(context, target, x, y, damage));
         System.out.println("New bullet");
@@ -125,9 +112,6 @@ public class Tower {
 
     void draw(Canvas canvas, Paint paint){
         canvas.drawBitmap(mTower, x - (width / 2), y - (height / 2), paint);
-
-
-
         for(Projectile p : projectiles){
             p.draw(canvas, paint);
         }

@@ -15,12 +15,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.graphics.Path;
@@ -33,8 +35,7 @@ class TowerGame extends SurfaceView implements Runnable{
     private long mNextFrameTime;
     // Is the game currently playing and or paused?
     private volatile boolean mPlaying = false;
-    private volatile boolean mPaused = true;
-
+    public volatile boolean mPaused = true;
 
 
     //TODO migrate this to strategy pattern
@@ -42,8 +43,6 @@ class TowerGame extends SurfaceView implements Runnable{
     private SoundPool mSP;
     private int mEat_ID = -1;
     private int mCrashID = -1;
-
-
 
 
     // The size in segments of the playable area
@@ -60,17 +59,16 @@ class TowerGame extends SurfaceView implements Runnable{
 
     private Point size;
     private int baseHealth;
-
-    // A snake ssss
     private Base mBase;
-    private Enemy mEnemy;
+
     private EnemyWave mEnemyWave;
+    private ArrayList<Tower> towerList;
     private Tower mTower;
     private CopyOnWriteArrayList enemyList;
-    // And an apple
-    private Turret mTurret;
 
     HUD mHUD;
+    ArrayList<Rect> buttons;
+    UIController uiC;
 
     private Bitmap mBackground;
 
@@ -81,74 +79,33 @@ class TowerGame extends SurfaceView implements Runnable{
     // from GameActivity
     public TowerGame(Context context, Point size) throws IOException {
         super(context);
-
         this.size = size;
-
         mHUD = new HUD(size);
 
 
 
 
 
-
-        // Work out how many pixels each block is
         int blockSize = size.x / NUM_BLOCKS_WIDE;
-        // How many blocks of the same size will fit into the height
         mNumBlocksHigh = size.y / blockSize;
-
-
-        //TODO *Nick* migrate necessary things to sound strategy pattern classes whil allowing for
-        // Initializing the SoundPool from here as seamlessly as possible
-
-        //Instantiating the strategy pattern to handle the audio here
         assetManager = context.getAssets();
 
-
-
-        // Initialize the drawing objects
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
-
-
-
-        // Call the constructors of our two game objects
-
-        Point point = new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh);
-
-
-
-
-
-
         mBase = new Base(context, size);
-
         mEnemyWave = new EnemyWave(context, size, mBase);
-
-        //enemyList = mEnemyWave.getEnemyList();
-
-        mTower = new Tower(context, 1000, 300, mEnemyWave);
-
-
-        //mEnemy = new Enemy(context,100, 500, 60,60, 50, size, mBase);
+        mTower = new iceTower(context, 1000, 300, mEnemyWave);
+        baseHealth = 500;
 
     }
 
 
     // Called to start a new game
     public void newGame() {
-
-        // reset the snake
-//        mEnemy.reset(NUM_BLOCKS_WIDE, mNumBlocksHigh);
-
-        // Get the apple ready for dinner
-
-        //mTurret.spawn();
-
-
-        // Reset the mScore
+        mEnemyWave.reset();
+        mBase.reset();
+        baseHealth = 500;
         mScore = 0;
-
-        // Setup mNextFrameTime so an update can triggered
         mNextFrameTime = System.currentTimeMillis();
     }
 
@@ -203,7 +160,12 @@ class TowerGame extends SurfaceView implements Runnable{
 
         mEnemyWave.update();
         baseHealth = mBase.getHealth();
+        if(baseHealth <= 0 || mEnemyWave.getRemaining() == 0){
+            mPaused = true;
+        }
         mTower.update();
+
+
 
     }
 
@@ -218,27 +180,15 @@ class TowerGame extends SurfaceView implements Runnable{
         if (mSurfaceHolder.getSurface().isValid()) {
 
             mCanvas = mSurfaceHolder.lockCanvas();
-
             mCanvas.drawBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_background), NUM_BLOCKS_WIDE, mNumBlocksHigh, mPaint);
-
             // Set the size and color of the mPaint for the text
             mPaint.setColor(Color.argb(255, 255, 255, 255));
             mPaint.setTextSize(100);
-
             // Draw the score
             mCanvas.drawText("Base: " + baseHealth, 20, 120, mPaint);
             mPaint.setTextSize(70);
             mCanvas.drawText("Enemies left: " + mEnemyWave.getRemaining(), 20, 200, mPaint);
             mHUD.draw(mCanvas, mPaint);
-
-
-            // Draw the apple and the snake
-
-            //mTurret.draw(mCanvas, mPaint);
-
-            //mEnemy.draw(mCanvas, mPaint);
-
-
 
             Path sPath = new Path();
             sPath.moveTo(0, 500);
@@ -246,41 +196,35 @@ class TowerGame extends SurfaceView implements Runnable{
             sPath.lineTo(1000, 750);
             sPath.lineTo(size.x,750);
 
-
-
-
-            //Paint ballPaint = new Paint();
-            //ballPaint.setColor(Color.GREEN);
             Paint pathPaint = new Paint();
             pathPaint.setColor(Color.GRAY);
             pathPaint.setStyle(Paint.Style.STROKE);
             pathPaint.setStrokeWidth(20);
-
             mCanvas.drawPath(sPath, pathPaint);
-            //mEnemy.draw(mCanvas, mPaint);
             mBase.draw(mCanvas, mPaint);
-
-            //mEnemyWave.update(mCanvas, mPaint);
             mEnemyWave.draw(mCanvas, mPaint);
             mTower.draw(mCanvas, mPaint);
-
 
             // Draw some text while paused
             if(mPaused){
 
-                // Set the size and color of the mPaint for the text
+                if(baseHealth <= 0){
+                    mPaint.setColor(Color.argb(255, 255, 0, 0));
+                    mPaint.setTextSize(200);
+                    mCanvas.drawText("You have lost.", 200, 700, mPaint);
+                }
+
+                if(mEnemyWave.getRemaining() == 0){
+                    mPaint.setColor(Color.argb(255, 0, 255, 0));
+                    mPaint.setTextSize(200);
+                    mCanvas.drawText("You have won!", 200, 700, mPaint);
+                }
+
                 mPaint.setColor(Color.argb(255, 255, 255, 255));
-                mPaint.setTextSize(250);
+                mPaint.setTextSize(100);
 
-                // Draw the message
-                // We will give this an international upgrade soon
-
-                //i uncommented this code and it seems to work, might be temporary
-                mCanvas.drawText("Tap to Play!", 200, 700, mPaint);
-
+                mCanvas.drawText("Tap Anywhere to Play!", 200, 900, mPaint);
             }
-
-
             // Unlock the mCanvas and reveal the graphics for this frame
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
@@ -296,18 +240,12 @@ class TowerGame extends SurfaceView implements Runnable{
 
                     return true;
                 }
-
-
                 break;
-
             default:
                 break;
-
         }
         return true;
     }
-
-
     // Stop the thread
     public void pause() {
         mPlaying = false;
@@ -317,8 +255,6 @@ class TowerGame extends SurfaceView implements Runnable{
             // Error
         }
     }
-
-
     // Start the thread
     public void resume() {
         mPlaying = true;
