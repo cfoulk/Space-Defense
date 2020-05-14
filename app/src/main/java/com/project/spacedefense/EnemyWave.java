@@ -22,7 +22,7 @@ class EnemyWave {
         this.context = context;
         this.size = size;
         this.mBase = mBase;
-        enemies = 10;
+        enemies = 10; //amount of enemies to spawn
         spawned = 0;
         spawnTime = 3000; // 3 seconds
         timeSinceLastSpawn = 0;
@@ -33,7 +33,7 @@ class EnemyWave {
     void update(Canvas canvas, Paint paint) {
 
 
-        if((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime && (spawned < 10)){
+        if((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime && (spawned < enemies)){
             enemyList.add(new Enemy(context, 100, 500, 60, 60, 50, size, mBase));
             System.out.println(System.currentTimeMillis() + " New enemy " + spawned);
             timeSinceLastSpawn = System.currentTimeMillis();
