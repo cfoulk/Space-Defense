@@ -9,7 +9,7 @@ import android.graphics.Point;
 
 public class Enemy {
 
-    private int speed = 25;
+    private int speed = 10;
 
     private Boolean isAlive;
 
@@ -17,7 +17,7 @@ public class Enemy {
 
     private int height, width;
 
-    private Bitmap mEnemy;
+    Bitmap mEnemy;
 
     //screen size
     private Point ss;
@@ -25,7 +25,6 @@ public class Enemy {
     private Point basePos;
     private int baseW, baseH;
     private Base mBase;
-
 
 
     Enemy(Context context, int x, int y, int width, int height, int health, Point ss, Base mBase){
@@ -42,12 +41,12 @@ public class Enemy {
         this.baseW = mBase.getWidth();
         this.baseH = mBase.getHeight();
 
-        mEnemy = BitmapFactory
+        /*mEnemy = BitmapFactory
                 .decodeResource(context.getResources(),
                         R.drawable.alien_octo);
 
         mEnemy = Bitmap
-                .createScaledBitmap(mEnemy, width, height, true);
+                .createScaledBitmap(mEnemy, width, height, true);*/
     }
 
     void update(){
@@ -64,7 +63,7 @@ public class Enemy {
         canvas.drawBitmap(mEnemy,x - (width/2),y - (height/2),paint);
     }
 
-    private void move(){
+    void move(){
 
         if ((y == 500) && (x < 1000)){
             x = x + speed;

@@ -32,12 +32,9 @@ class EnemyWave {
 
     void update() {
 
-
         if((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime && (spawned < enemies)){
-            enemyList.add(new Enemy(context, 100, 500, 60, 60, 50, size, mBase));
-            System.out.println(System.currentTimeMillis() + " New enemy " + spawned);
+            enemyList.add(new smallOctoEnemy(context, 100, 500, 60, 60, 50, size, mBase));
             timeSinceLastSpawn = System.currentTimeMillis();
-            System.out.println("new spawn time: " + timeSinceLastSpawn);
             spawned += 1;
         }
 
@@ -46,8 +43,6 @@ class EnemyWave {
         }
 
     }
-
-
 
     void draw(Canvas canvas, Paint paint){
         for(Enemy e: enemyList) {
