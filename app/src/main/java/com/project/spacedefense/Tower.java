@@ -12,7 +12,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class Tower {
 
     private int x,y, width, height, damage;
-    private float firingSpeed, timeSinceLastShot, angle;
+    private long firingSpeed, timeSinceLastShot;
+    private float angle;
 
     private Context context;
 
@@ -30,13 +31,13 @@ public class Tower {
         this.y = y;
         this.width = 60;
         this.height = 60;
-        this.damage = 50;
+        this.damage = 5;
         this.mEnemyWave = mEnemyWave;
         this.enemies = mEnemyWave.getEnemyList();
         //this.target = getTarget();
         //this.angle = calculateAngle();
 
-        this.firingSpeed = 25;
+        this.firingSpeed = 2000;
 
         this.projectiles = new ArrayList<>();
 
@@ -50,25 +51,21 @@ public class Tower {
     }
 
     private Enemy getTarget(){
-        if(enemies.size() > 0) {
-            return enemies.get(0);
-        }
-
-        return null;
+        return enemies.get(0);
     }
 
     private float calculateAngle(){
-        if(target != null) {
-            double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
-            return (float) Math.toDegrees(angleTemp) - 90;
-        }
 
-        return 0;
+        double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
+        return (float) Math.toDegrees(angleTemp) - 90;
+
     }
 
     private void shoot(){
-        timeSinceLastShot = 0;
-        projectiles.add(new Projectile(context, target, x, y, damage, firingSpeed));
+        //timeSinceLastShot = 0;
+        projectiles.add(new Projectile(context, target, x, y, damage));
+        System.out.println("New bullet");
+        timeSinceLastShot = System.currentTimeMillis();
     }
 
     void update(){
@@ -79,7 +76,11 @@ public class Tower {
         }
 
         for(Projectile p : projectiles){
-            p.update();
+            if(p.getStatus()) {
+                p.update();
+            } else {
+                projectiles.remove(p);
+            }
         }
 
         angle = calculateAngle();

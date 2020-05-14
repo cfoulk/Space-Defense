@@ -50,11 +50,11 @@ public class Enemy {
 
     void update(){
 
+        System.out.println(health + "   " + isAlive);
         if (isAlive){
             move();
             checkBaseCollision();
         }
-
     }
 
 
@@ -79,10 +79,7 @@ public class Enemy {
     }
 
     private void checkHealth(){
-        if(health <= 0){
-            isAlive = false;
-        }
-        isAlive = true;
+        isAlive = health > 0;
     }
 
     private void checkBaseCollision(){
@@ -113,5 +110,13 @@ public class Enemy {
 
     public int getY(){
         return y;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
     }
 }
