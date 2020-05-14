@@ -22,7 +22,7 @@ public class Projectile {
         this.width = 60;
         this.height = 60;
         this.damage = damage;
-        this.firingSpeed = 100;
+        this.firingSpeed = 75;
         this.target = target;
         this.xVelocity = 0f;
         this.yVelocity = 0f;

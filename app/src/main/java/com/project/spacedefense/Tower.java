@@ -11,7 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class Tower {
 
-    private int x,y, width, height, damage;
+    private int x,y, width, height, damage, range;
     private long firingSpeed, timeSinceLastShot;
     private float angle;
 
@@ -22,6 +22,7 @@ public class Tower {
     private CopyOnWriteArrayList<Enemy> enemies;
     private Enemy target;
     private EnemyWave mEnemyWave;
+    private boolean targeted;
 
     Tower(Context context, int x, int y, EnemyWave mEnemyWave){
 
@@ -31,9 +32,11 @@ public class Tower {
         this.y = y;
         this.width = 60;
         this.height = 60;
-        this.damage = 5;
+        this.damage = 15;
+        this.range = 900;
         this.mEnemyWave = mEnemyWave;
         this.enemies = mEnemyWave.getEnemyList();
+        this.targeted = false;
         //this.target = getTarget();
         //this.angle = calculateAngle();
 
@@ -51,14 +54,42 @@ public class Tower {
     }
 
     private Enemy getTarget(){
-        return enemies.get(0);
+        //return enemies.get(0);
+        Enemy closest = null;
+        float closestDistance = 10000;
+        for(Enemy e : enemies){
+            if(isInRange(e) && findDistance(e) < closestDistance){
+                closestDistance = findDistance(e);
+                closest = e;
+            }
+        }
+        if (closest != null){
+            targeted = true;
+        }
+        return closest;
+    }
+
+    private boolean isInRange(Enemy e){
+        float xDistance = Math.abs(e.getX() - x);
+        float yDistance = Math.abs(e.getY() - y);
+
+        return xDistance < range && yDistance < range;
+    }
+
+    private float findDistance(Enemy e){
+        float xDistance = Math.abs(e.getX() - x);
+        float yDistance = Math.abs(e.getY() - x);
+        return xDistance + yDistance;
     }
 
     private float calculateAngle(){
 
-        double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
-        return (float) Math.toDegrees(angleTemp) - 90;
+        if (targeted) {
+            double angleTemp = Math.atan2(target.getY() - y, target.getX() - x);
+            return (float) Math.toDegrees(angleTemp) - 90;
+        }
 
+        return 0;
     }
 
     private void shoot(){
@@ -69,21 +100,22 @@ public class Tower {
     }
 
     void update(){
-
-        target = getTarget();
-        if((System.currentTimeMillis() - timeSinceLastShot) >= firingSpeed){
-            shoot();
-        }
-
-        for(Projectile p : projectiles){
-            if(p.getStatus()) {
-                p.update();
-            } else {
-                projectiles.remove(p);
+        if(enemies.size() > 0) {
+            if (!targeted || !target.getStatus()) {
+                target = getTarget();
             }
+            if ((System.currentTimeMillis() - timeSinceLastShot) >= firingSpeed) {
+                shoot();
+            }
+            for (Projectile p : projectiles) {
+                if (p.getStatus()) {
+                    p.update();
+                } else {
+                    projectiles.remove(p);
+                }
+            }
+            angle = calculateAngle();
         }
-
-        angle = calculateAngle();
     }
 
     void draw(Canvas canvas, Paint paint){
