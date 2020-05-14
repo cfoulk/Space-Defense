@@ -6,13 +6,16 @@ import android.graphics.Paint;
 import android.graphics.Point;
 
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 class EnemyWave {
 
     private int enemies, spawned;
     private long timeSinceLastSpawn, spawnTime;
 
-    private ArrayList<Enemy> enemyList;
+    private boolean waveComplete, allDead;
+
+    private CopyOnWriteArrayList<Enemy> enemyList;
     private Point size;
     private Base mBase;
     private Context context;
@@ -27,7 +30,7 @@ class EnemyWave {
         spawnTime = 3000; // 3 seconds
         timeSinceLastSpawn = 0;
 
-        enemyList = new ArrayList<>();
+        enemyList = new CopyOnWriteArrayList<>();
     }
 
     void update() {
@@ -48,7 +51,11 @@ class EnemyWave {
         }
 
         for(Enemy e: enemyList) {
-            e.update();
+            if(e.getStatus()) {
+                e.update();
+            } else {
+                enemyList.remove(e);
+            }
         }
 
     }
@@ -57,6 +64,10 @@ class EnemyWave {
         for(Enemy e: enemyList) {
             e.draw(canvas, paint);
         }
+    }
+
+    public CopyOnWriteArrayList getEnemyList(){
+        return enemyList;
     }
 
 }

@@ -102,4 +102,8 @@ public class Enemy {
         health -= t;
         checkHealth();
     }
+
+    public boolean getStatus(){
+        return isAlive;
+    }
 }
