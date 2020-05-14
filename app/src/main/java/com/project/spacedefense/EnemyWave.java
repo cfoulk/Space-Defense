@@ -36,13 +36,13 @@ class EnemyWave {
         if((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime && (spawned < enemies)){
 
             if(spawned < 5) {
-                enemyList.add(new smallOctoEnemy(context, 100, 500, 60, 60, 50, size, mBase));
+                enemyList.add(new smallOctoEnemy(context, 100, 500, 50, size, mBase));
             }
             if(spawned >= 5 && spawned < 9){
-                enemyList.add(new bigOctoEnemy(context, 100, 500, 60, 60, 50, size, mBase));
+                enemyList.add(new bigOctoEnemy(context, 100, 500,50, size, mBase));
             }
             if (spawned == 9){
-                enemyList.add(new bossEnemy(context, 100, 500, 60, 60, 50, size, mBase));
+                enemyList.add(new bossEnemy(context, 100, 500, 50, size, mBase));
             }
             timeSinceLastSpawn = System.currentTimeMillis();
             spawned += 1;

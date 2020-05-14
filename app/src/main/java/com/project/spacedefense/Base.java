@@ -34,7 +34,7 @@ public class Base {
 
         mBase = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.alien_octo);
+                        R.drawable.base);
         mBase = Bitmap
                 .createScaledBitmap(mBase, width, height, true);
 

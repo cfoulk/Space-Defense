@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
@@ -17,12 +18,13 @@ public class Tower {
 
     private Context context;
 
-    private Bitmap mTower;
+    private Bitmap mTower, mCannon;
     private ArrayList<Projectile> projectiles;
     private CopyOnWriteArrayList<Enemy> enemies;
     private Enemy target;
     private EnemyWave mEnemyWave;
     private boolean targeted;
+    //private Matrix m;
 
     Tower(Context context, int x, int y, EnemyWave mEnemyWave){
 
@@ -30,8 +32,8 @@ public class Tower {
         this.context = context;
         this.x = x;
         this.y = y;
-        this.width = 60;
-        this.height = 60;
+        this.width = 75;
+        this.height = 75;
         this.damage = 15;
         this.range = 900;
         this.mEnemyWave = mEnemyWave;
@@ -47,10 +49,13 @@ public class Tower {
 
         mTower = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.guns);
+                        R.drawable.redtower);
 
         mTower = Bitmap
                 .createScaledBitmap(mTower, width, height, true);
+        
+
+
     }
 
     private Enemy getTarget(){
@@ -120,6 +125,8 @@ public class Tower {
 
     void draw(Canvas canvas, Paint paint){
         canvas.drawBitmap(mTower, x - (width / 2), y - (height / 2), paint);
+
+
 
         for(Projectile p : projectiles){
             p.draw(canvas, paint);

@@ -29,7 +29,7 @@ public class Projectile {
 
         mProjectile = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.cannonball);
+                        R.drawable.fireball);
 
         mProjectile = Bitmap
                 .createScaledBitmap(mProjectile, width, height, true);

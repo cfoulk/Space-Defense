@@ -26,14 +26,14 @@ public class Enemy {
     private Base mBase;
 
 
-    Enemy(Context context, int x, int y, int width, int height, int health, Point ss, Base mBase){
+    Enemy(Context context, int x, int y, int health, Point ss, Base mBase){
 
         this.mBase = mBase;
         isAlive = true;
         this.x = x;
         this.y = y;
-        this.width = width;
-        this.height = height;
+        //this.width = width;
+        //this.height = height;
         this.health = health;
         this.ss = ss;
         this.basePos = mBase.getPosition();

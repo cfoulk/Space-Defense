@@ -7,14 +7,16 @@ import android.graphics.Point;
 
 class bigOctoEnemy extends Enemy {
 
-    bigOctoEnemy(Context context, int x, int y, int width, int height, int health, Point ss, Base mBase) {
-        super(context, x, y, width, height, health, ss, mBase);
+    bigOctoEnemy(Context context, int x, int y, int health, Point ss, Base mBase) {
+        super(context, x, y, health, ss, mBase);
 
         this.health = 75;
+        this.height = 100;
+        this.width = 60;
 
         mEnemy = BitmapFactory
                 .decodeResource(context.getResources(),
-                        R.drawable.cannonball);
+                        R.drawable.bigocto);
 
         mEnemy = Bitmap
                 .createScaledBitmap(mEnemy, width, height, true);
