@@ -5,9 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 
-public class bossEnemy extends Enemy {
+class bossEnemy extends Enemy {
     bossEnemy(Context context, int x, int y, int width, int height, int health, Point ss, Base mBase) {
         super(context, x, y, width, height, health, ss, mBase);
+
+        this.width = 100;
+        this.height = 100;
+        this.health = 100;
 
         mEnemy = BitmapFactory
                 .decodeResource(context.getResources(),

@@ -13,15 +13,14 @@ public class Enemy {
 
     private Boolean isAlive;
 
-    private int x, y, health;
-
-    private int height, width;
+    int x, y, health, height, width;
 
     Bitmap mEnemy;
 
     //screen size
     private Point ss;
 
+    //base info
     private Point basePos;
     private int baseW, baseH;
     private Base mBase;
