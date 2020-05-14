@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 class EnemyWave {
@@ -71,7 +69,7 @@ class EnemyWave {
         return enemyList;
     }
 
-    public int getRemaining(){
+    int getRemaining(){
         return enemies - enemiesDead;
     }
 
