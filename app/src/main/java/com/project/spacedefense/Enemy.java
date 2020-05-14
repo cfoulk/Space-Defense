@@ -28,7 +28,7 @@ public class Enemy {
 
 
 
-    Enemy(Context context, int x, int y, int width, int height, int health, Point ss, Point basePos, int baseW, int baseH, Base mBase){
+    Enemy(Context context, int x, int y, int width, int height, int health, Point ss, Base mBase){
 
         this.mBase = mBase;
         isAlive = true;
@@ -38,9 +38,9 @@ public class Enemy {
         this.height = height;
         this.health = health;
         this.ss = ss;
-        this.basePos = basePos;
-        this.baseW = baseW;
-        this.baseH = baseH;
+        this.basePos = mBase.getPosition();
+        this.baseW = mBase.getWidth();
+        this.baseH = mBase.getHeight();
 
         mEnemy = BitmapFactory
                 .decodeResource(context.getResources(),
@@ -51,7 +51,7 @@ public class Enemy {
     }
 
     void update(){
-        checkHealth();
+
         if (isAlive){
             move();
             checkBaseCollision();
@@ -64,7 +64,7 @@ public class Enemy {
         canvas.drawBitmap(mEnemy,x - (width/2),y - (height/2),paint);
     }
 
-    void move(){
+    private void move(){
 
         if ((y == 500) && (x < 1000)){
             x = x + speed;
@@ -78,7 +78,7 @@ public class Enemy {
         }
     }
 
-    void checkHealth(){
+    private void checkHealth(){
         if(health <= 0){
             isAlive = false;
         }

@@ -57,13 +57,12 @@ class TowerGame extends SurfaceView implements Runnable{
     private Paint mPaint;
 
     private Point size;
-    private Point basePos;
-    private int baseW, baseH;
     private int baseHealth;
 
     // A snake ssss
     private Base mBase;
     private Enemy mEnemy;
+    private EnemyWave mEnemyWave;
     // And an apple
     private Turret mTurret;
 
@@ -123,13 +122,10 @@ class TowerGame extends SurfaceView implements Runnable{
 
         mBase = new Base(context, size);
 
+        mEnemyWave = new EnemyWave(context, size, mBase);
 
 
-        basePos = mBase.getPosition();
-        baseW = mBase.getWidth();
-        baseH = mBase.getHeight();
-
-        mEnemy = new Enemy(context,100, 500, 60,60, 50, size, basePos, baseW, baseH, mBase);
+        //mEnemy = new Enemy(context,100, 500, 60,60, 50, size, mBase);
 
     }
 
@@ -204,7 +200,8 @@ class TowerGame extends SurfaceView implements Runnable{
 
 
        // mEnemy.move();
-        mEnemy.update();
+        //mEnemy.update();
+        mEnemyWave.update(mCanvas, mPaint);
         baseHealth = mBase.getHealth();
 
     }
@@ -258,8 +255,11 @@ class TowerGame extends SurfaceView implements Runnable{
             pathPaint.setStrokeWidth(20);
 
             mCanvas.drawPath(sPath, pathPaint);
-            mEnemy.draw(mCanvas, mPaint);
+            //mEnemy.draw(mCanvas, mPaint);
             mBase.draw(mCanvas, mPaint);
+
+            //mEnemyWave.update(mCanvas, mPaint);
+            mEnemyWave.draw(mCanvas, mPaint);
 
 
             // Draw some text while paused
