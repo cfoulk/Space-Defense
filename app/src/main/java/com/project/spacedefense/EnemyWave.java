@@ -65,7 +65,7 @@ class EnemyWave {
         }
     }
 
-    public CopyOnWriteArrayList getEnemyList(){
+    public CopyOnWriteArrayList<Enemy> getEnemyList(){
         return enemyList;
     }
 

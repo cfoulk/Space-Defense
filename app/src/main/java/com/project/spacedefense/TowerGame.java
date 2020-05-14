@@ -20,6 +20,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import android.graphics.Path;
 
@@ -63,6 +65,8 @@ class TowerGame extends SurfaceView implements Runnable{
     private Base mBase;
     private Enemy mEnemy;
     private EnemyWave mEnemyWave;
+    private Tower mTower;
+    private CopyOnWriteArrayList enemyList;
     // And an apple
     private Turret mTurret;
 
@@ -111,10 +115,6 @@ class TowerGame extends SurfaceView implements Runnable{
 
         Point point = new Point(NUM_BLOCKS_WIDE, mNumBlocksHigh);
 
-        mTurret = new Turret.TurretBuilder(
-                context, point, blockSize)
-                .mBitMapTurrets()
-                .build();
 
 
 
@@ -123,6 +123,10 @@ class TowerGame extends SurfaceView implements Runnable{
         mBase = new Base(context, size);
 
         mEnemyWave = new EnemyWave(context, size, mBase);
+
+        //enemyList = mEnemyWave.getEnemyList();
+
+        mTower = new Tower(context, 1000, 300, mEnemyWave);
 
 
         //mEnemy = new Enemy(context,100, 500, 60,60, 50, size, mBase);
@@ -199,6 +203,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
         mEnemyWave.update();
         baseHealth = mBase.getHealth();
+        mTower.update();
 
     }
 
@@ -257,6 +262,7 @@ class TowerGame extends SurfaceView implements Runnable{
 
             //mEnemyWave.update(mCanvas, mPaint);
             mEnemyWave.draw(mCanvas, mPaint);
+            mTower.draw(mCanvas, mPaint);
 
 
             // Draw some text while paused

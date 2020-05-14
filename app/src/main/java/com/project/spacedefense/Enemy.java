@@ -106,4 +106,12 @@ public class Enemy {
     public boolean getStatus(){
         return isAlive;
     }
+
+    public int getX(){
+        return x;
+    }
+
+    public int getY(){
+        return y;
+    }
 }
