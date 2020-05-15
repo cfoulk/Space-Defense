@@ -17,13 +17,15 @@ class EnemyWave {
     private Point size;
     private Base mBase;
     private Context context;
+    int mScore;
 
-    EnemyWave(Context context, Point size, Base mBase){
+    EnemyWave(Context context, Point size, Base mBase, int mScore){
 
         this.context = context;
         this.size = size;
         this.mBase = mBase;
-        enemies = 10; //amount of enemies to spawn
+        this.mScore = mScore;
+        enemies = 30; //amount of enemies to spawn
         spawned = 0;
         spawnTime = 3000; // 3 seconds
         timeSinceLastSpawn = 0;
@@ -35,17 +37,23 @@ class EnemyWave {
 
         if((System.currentTimeMillis() - timeSinceLastSpawn) >= spawnTime && (spawned < enemies)){
 
-            if(spawned < 5) {
+            if(spawned < 20) {
+                spawnTime = 3000;
                 enemyList.add(new smallOctoEnemy(context, 100, 500, 50, size, mBase));
+                spawned += 1;
             }
-            if(spawned >= 5 && spawned < 9){
+            if(spawned >= 20 && spawned < (enemies - 1)){
                 enemyList.add(new bigOctoEnemy(context, 100, 500,50, size, mBase));
+                spawnTime = 4000;
+                spawned += 1;
             }
-            if (spawned == 9){
+            if (spawned == enemies - 1){
+                spawnTime = 10000;
                 enemyList.add(new bossEnemy(context, 100, 500, 50, size, mBase));
+                spawned += 1;
             }
             timeSinceLastSpawn = System.currentTimeMillis();
-            spawned += 1;
+
         }
 
         for(Enemy e: enemyList) {
@@ -53,6 +61,7 @@ class EnemyWave {
                 e.update();
             } else {
                 enemyList.remove(e);
+                mScore += 50;
                 enemiesDead += 1;
             }
         }
@@ -75,9 +84,19 @@ class EnemyWave {
 
     public void reset(){
         enemyList.clear();
-        enemies = 10;
+        enemies = 30;
         spawned = 0;
         enemiesDead = 0;
+    }
+
+    public int getScore(){
+        return mScore;
+    }
+
+
+    //continually update the score when purchasing
+    public void minusScore(){
+        mScore -= 200;
     }
 
 }

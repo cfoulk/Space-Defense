@@ -8,8 +8,8 @@ public class destructionTower extends Tower {
     destructionTower(Context context, int x, int y, EnemyWave mEnemyWave) {
         super(context, x, y, mEnemyWave);
 
-        this.damage = 50;
-        this.firingSpeed = 5000;
+        this.damage = 20;
+        this.firingSpeed = 6000;
         mTower = BitmapFactory
                 .decodeResource(context.getResources(),
                         R.drawable.greentower);

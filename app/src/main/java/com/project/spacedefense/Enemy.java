@@ -11,7 +11,7 @@ public class Enemy {
 
     private int speed = 10;
 
-    private Boolean isAlive;
+    Boolean isAlive;
 
     int x, y, health, height, width;
 
@@ -21,9 +21,9 @@ public class Enemy {
     private Point ss;
 
     //base info
-    private Point basePos;
-    private int baseW, baseH;
-    private Base mBase;
+    Point basePos;
+    int baseW, baseH;
+    Base mBase;
 
 
     Enemy(Context context, int x, int y, int health, Point ss, Base mBase){
@@ -78,15 +78,15 @@ public class Enemy {
         }
     }
 
-    private void checkHealth(){
+    public void checkHealth(){
         isAlive = health > 0;
     }
 
-    private void checkBaseCollision(){
+    void checkBaseCollision(){
         if(x + width > basePos.x && x < basePos.x + baseW && y + height > basePos.y && y < basePos.y + baseH){
             isAlive = false;
 
-            mBase.setHealth();
+            mBase.setHealth(50);
         }
     }
 

@@ -11,7 +11,7 @@ class smallOctoEnemy extends Enemy{
     smallOctoEnemy(Context context, int x, int y, int health, Point ss, Base mBase) {
         super(context, x, y, health, ss, mBase);
 
-        this.health = 25;
+        this.health = 60;
         this.height = 60;
         this.width = 60;
 

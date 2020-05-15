@@ -28,7 +28,7 @@ public class Projectile {
         this.xVelocity = 0f;
         this.yVelocity = 0f;
 
-        calculateDirection();
+        //calculateDirection();
 
     }
 
@@ -51,11 +51,13 @@ public class Projectile {
 
     void update(){
 
-        calculateDirection();
-        x += xVelocity * firingSpeed;
-        y += yVelocity * firingSpeed;
-        checkEnemyCollision();
+        if(target != null) {
+            calculateDirection();
+            x += xVelocity * firingSpeed;
+            y += yVelocity * firingSpeed;
+            checkEnemyCollision();
 
+        }
     }
 
     void draw(Canvas canvas, Paint paint){
@@ -73,7 +75,7 @@ public class Projectile {
     }
 
     public boolean getStatus(){
-        if(target.getStatus()) {
+        if(target.getStatus() && target != null) {
             return isAlive;
         }
         return false;

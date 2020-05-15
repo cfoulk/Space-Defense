@@ -74,6 +74,8 @@ public class Tower {
         return xDistance + yDistance;
     }
 
+
+    // was suppose to calc angle for the cannon on the towers to rotate
     private float calculateAngle(){
 
         if (targeted) {
@@ -93,8 +95,12 @@ public class Tower {
 
     void update(){
         if(enemies.size() > 0) {
-            if (!targeted || !target.getStatus()) {
+            if (!targeted) { // || !target.getstatus()
                 target = getTarget();
+            }
+
+            if(target == null || target.isAlive == false){
+                targeted = false;
             }
             if ((System.currentTimeMillis() - timeSinceLastShot) >= firingSpeed) {
                 shoot();
@@ -106,7 +112,7 @@ public class Tower {
                     projectiles.remove(p);
                 }
             }
-            angle = calculateAngle();
+            //angle = calculateAngle();
         }
     }
 

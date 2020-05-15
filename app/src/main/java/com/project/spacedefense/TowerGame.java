@@ -22,6 +22,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -50,7 +51,7 @@ class TowerGame extends SurfaceView implements Runnable{
     private int mNumBlocksHigh;
 
     // How many points does the player have
-    private int mScore;
+    public int mScore;
 
     // Objects for drawing
     private Canvas mCanvas;
@@ -62,16 +63,14 @@ class TowerGame extends SurfaceView implements Runnable{
     private Base mBase;
 
     private EnemyWave mEnemyWave;
-    private ArrayList<Tower> towerList;
+    private Towers mTowers;
     private Tower mTower;
+    private Tower mTower2;
+    private Tower mTower3;
+    //private Towers mTowers;
     private CopyOnWriteArrayList enemyList;
 
     HUD mHUD;
-    ArrayList<Rect> buttons;
-    UIController uiC;
-
-    private Bitmap mBackground;
-
 
     private AssetManager assetManager;
 
@@ -93,19 +92,27 @@ class TowerGame extends SurfaceView implements Runnable{
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
         mBase = new Base(context, size);
-        mEnemyWave = new EnemyWave(context, size, mBase);
-        mTower = new iceTower(context, 1000, 300, mEnemyWave);
+        mEnemyWave = new EnemyWave(context, size, mBase, mScore);
+        mTowers = new Towers(context, mEnemyWave);
+
+        //mTowers.add(new fireTower(context, 1000, 300, mEnemyWave));
+
+        //mTower = new fireTower(context, 1000, 300, mEnemyWave);
+        //mTower2 = new iceTower(context, 800, 600, mEnemyWave);
+        // = new destructionTower(context, 1000, 450, mEnemyWave);
         baseHealth = 500;
+
 
     }
 
 
     // Called to start a new game
     public void newGame() {
+        mScore = 0;
         mEnemyWave.reset();
         mBase.reset();
-        baseHealth = 500;
-        mScore = 0;
+        mTowers.reset();
+        baseHealth = 750;
         mNextFrameTime = System.currentTimeMillis();
     }
 
@@ -159,11 +166,12 @@ class TowerGame extends SurfaceView implements Runnable{
     public void update() throws IOException {
 
         mEnemyWave.update();
+        mScore = mEnemyWave.getScore();
         baseHealth = mBase.getHealth();
         if(baseHealth <= 0 || mEnemyWave.getRemaining() == 0){
             mPaused = true;
         }
-        mTower.update();
+        mTowers.update();
 
 
 
@@ -188,6 +196,8 @@ class TowerGame extends SurfaceView implements Runnable{
             mCanvas.drawText("Base: " + baseHealth, 20, 120, mPaint);
             mPaint.setTextSize(70);
             mCanvas.drawText("Enemies left: " + mEnemyWave.getRemaining(), 20, 200, mPaint);
+            mPaint.setTextSize(50);
+            mCanvas.drawText("Score: " + mScore, 20, 250, mPaint);
             mHUD.draw(mCanvas, mPaint);
 
             Path sPath = new Path();
@@ -203,7 +213,7 @@ class TowerGame extends SurfaceView implements Runnable{
             mCanvas.drawPath(sPath, pathPaint);
             mBase.draw(mCanvas, mPaint);
             mEnemyWave.draw(mCanvas, mPaint);
-            mTower.draw(mCanvas, mPaint);
+            mTowers.draw(mCanvas, mPaint);
 
             // Draw some text while paused
             if(mPaused){
@@ -232,6 +242,10 @@ class TowerGame extends SurfaceView implements Runnable{
 
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent) {
+
+        int i = motionEvent.getActionIndex();
+        int x = (int) motionEvent.getX(i);
+        int y = (int) motionEvent.getY(i);
         switch (motionEvent.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_UP:
                 if (mPaused) {
@@ -239,6 +253,11 @@ class TowerGame extends SurfaceView implements Runnable{
                     newGame();
 
                     return true;
+                }
+
+                if(!mPaused && mScore >= 200){
+                    mTowers.AddDestrctionTower(x, y);
+                    mEnemyWave.minusScore();
                 }
                 break;
             default:

@@ -27,7 +27,7 @@ public class Base {
 
         height = 100;
         width = 100;
-        health = 500;
+        health = 750;
 
         position = new Point(ss.x - width, 750);
 
@@ -46,8 +46,8 @@ public class Base {
     }
 
     //each time a enemy collides with the base, it takes 50 health from the base
-    public void setHealth(){
-        health -= 50;
+    public void setHealth(int m){
+        health -= m;
     }
 
     public Point getPosition(){
@@ -55,7 +55,7 @@ public class Base {
     }
 
     public void reset(){
-        health = 500;
+        health = 750;
     }
 
     public int getHeight(){
