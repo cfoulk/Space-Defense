@@ -86,6 +86,7 @@ class EnemyWave {
         enemies = 30;
         spawned = 0;
         enemiesDead = 0;
+        mScore = 0;
     }
 
     int getScore(){
