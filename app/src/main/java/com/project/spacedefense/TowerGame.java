@@ -225,7 +225,7 @@ class TowerGame extends SurfaceView implements Runnable{
                     return true;
                 }
 
-                if(!mPaused && mScore >= 0){
+                if(!mPaused && mScore >= 200){
                     mTowers.AddDestrctionTower(x, y);
                     mEnemyWave.minusScore();
                 }
