@@ -6,7 +6,7 @@ import android.graphics.Paint;
 
 import java.util.ArrayList;
 
-public class Towers {
+class Towers {
 
     private ArrayList<Tower> towerList;
 

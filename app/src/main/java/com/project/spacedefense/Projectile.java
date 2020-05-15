@@ -2,15 +2,14 @@ package com.project.spacedefense;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 
-public class Projectile {
+class Projectile {
 
     int x, y, damage;
     int height, width;
-    float firingSpeed, timeSinceLastShot, xVelocity, yVelocity;
+    private float firingSpeed, xVelocity, yVelocity;
     Bitmap mProjectile;
     Enemy target;
     boolean isAlive;
@@ -74,7 +73,7 @@ public class Projectile {
         }
     }
 
-    public boolean getStatus(){
+    boolean getStatus(){
         if(target.getStatus() && target != null) {
             return isAlive;
         }

@@ -15,7 +15,6 @@ public class Base {
 
     private Point position;
 
-    private boolean isAlive;
 
     private Bitmap mBase;
 
@@ -23,7 +22,6 @@ public class Base {
     Base(Context context, Point ss){
 
 
-        isAlive = true;
 
         height = 100;
         width = 100;
@@ -46,15 +44,15 @@ public class Base {
     }
 
     //each time a enemy collides with the base, it takes 50 health from the base
-    public void setHealth(int m){
+    void setHealth(int m){
         health -= m;
     }
 
-    public Point getPosition(){
+    Point getPosition(){
         return position;
     }
 
-    public void reset(){
+    void reset(){
         health = 750;
     }
 
@@ -66,7 +64,7 @@ public class Base {
         return width;
     }
 
-    public int getHealth(){
+    int getHealth(){
         return health;
     }
 }

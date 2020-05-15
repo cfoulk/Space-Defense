@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class fireTower extends Tower {
+class fireTower extends Tower {
     fireTower(Context context, int x, int y, EnemyWave mEnemyWave) {
         super(context, x, y, mEnemyWave);
 

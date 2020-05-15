@@ -4,27 +4,17 @@
 
 package com.project.spacedefense;
 
-
-
-
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
-import android.media.SoundPool;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import java.io.IOException;
-import java.io.PrintStream;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
+
 
 import android.graphics.Path;
 
@@ -37,13 +27,6 @@ class TowerGame extends SurfaceView implements Runnable{
     // Is the game currently playing and or paused?
     private volatile boolean mPlaying = false;
     public volatile boolean mPaused = true;
-
-
-    //TODO migrate this to strategy pattern
-    // for playing sound effects
-    private SoundPool mSP;
-    private int mEat_ID = -1;
-    private int mCrashID = -1;
 
 
     // The size in segments of the playable area
@@ -64,30 +47,21 @@ class TowerGame extends SurfaceView implements Runnable{
 
     private EnemyWave mEnemyWave;
     private Towers mTowers;
-    private Tower mTower;
-    private Tower mTower2;
-    private Tower mTower3;
-    //private Towers mTowers;
-    private CopyOnWriteArrayList enemyList;
 
-    HUD mHUD;
 
-    private AssetManager assetManager;
+    //couldnt get it working properly
+    //HUD mHUD;
 
     // This is the constructor method that gets called
     // from GameActivity
     public TowerGame(Context context, Point size) throws IOException {
         super(context);
         this.size = size;
-        mHUD = new HUD(size);
-
-
-
+        //mHUD = new HUD(size);
 
 
         int blockSize = size.x / NUM_BLOCKS_WIDE;
         mNumBlocksHigh = size.y / blockSize;
-        assetManager = context.getAssets();
 
         mSurfaceHolder = getHolder();
         mPaint = new Paint();
@@ -95,13 +69,7 @@ class TowerGame extends SurfaceView implements Runnable{
         mEnemyWave = new EnemyWave(context, size, mBase, mScore);
         mTowers = new Towers(context, mEnemyWave);
 
-        //mTowers.add(new fireTower(context, 1000, 300, mEnemyWave));
-
-        //mTower = new fireTower(context, 1000, 300, mEnemyWave);
-        //mTower2 = new iceTower(context, 800, 600, mEnemyWave);
-        // = new destructionTower(context, 1000, 450, mEnemyWave);
         baseHealth = 500;
-
 
     }
 
@@ -197,8 +165,10 @@ class TowerGame extends SurfaceView implements Runnable{
             mPaint.setTextSize(70);
             mCanvas.drawText("Enemies left: " + mEnemyWave.getRemaining(), 20, 200, mPaint);
             mPaint.setTextSize(50);
-            mCanvas.drawText("Score: " + mScore, 20, 250, mPaint);
-            mHUD.draw(mCanvas, mPaint);
+            mCanvas.drawText("Score: " + mScore + " points", 20, 250, mPaint);
+            mPaint.setTextSize(50);
+            mCanvas.drawText("Additional towers cost 200 points. Click anywhere to set one.", 20, size.y, mPaint);
+            //mHUD.draw(mCanvas, mPaint);
 
             Path sPath = new Path();
             sPath.moveTo(0, 500);

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class destructionTower extends Tower {
+class destructionTower extends Tower {
     destructionTower(Context context, int x, int y, EnemyWave mEnemyWave) {
         super(context, x, y, mEnemyWave);
 

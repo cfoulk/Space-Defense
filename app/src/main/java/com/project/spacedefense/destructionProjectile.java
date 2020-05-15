@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class destructionProjectile extends Projectile {
+class destructionProjectile extends Projectile {
     destructionProjectile(Context context, Enemy target, int x, int y, int damage) {
         super(context, target, x, y, damage);
 

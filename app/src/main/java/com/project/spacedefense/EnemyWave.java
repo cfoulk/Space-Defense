@@ -11,13 +11,12 @@ class EnemyWave {
     private int enemies, spawned, enemiesDead;
     private long timeSinceLastSpawn, spawnTime;
 
-    private boolean waveComplete, allDead;
 
     private CopyOnWriteArrayList<Enemy> enemyList;
     private Point size;
     private Base mBase;
     private Context context;
-    int mScore;
+    private int mScore;
 
     EnemyWave(Context context, Point size, Base mBase, int mScore){
 
@@ -74,7 +73,7 @@ class EnemyWave {
         }
     }
 
-    public CopyOnWriteArrayList<Enemy> getEnemyList(){
+    CopyOnWriteArrayList<Enemy> getEnemyList(){
         return enemyList;
     }
 
@@ -82,20 +81,20 @@ class EnemyWave {
         return enemies - enemiesDead;
     }
 
-    public void reset(){
+    void reset(){
         enemyList.clear();
         enemies = 30;
         spawned = 0;
         enemiesDead = 0;
     }
 
-    public int getScore(){
+    int getScore(){
         return mScore;
     }
 
 
     //continually update the score when purchasing
-    public void minusScore(){
+    void minusScore(){
         mScore -= 200;
     }
 

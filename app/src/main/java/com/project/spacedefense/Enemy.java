@@ -78,7 +78,7 @@ public class Enemy {
         }
     }
 
-    public void checkHealth(){
+    private void checkHealth(){
         isAlive = health > 0;
     }
 
@@ -90,17 +90,17 @@ public class Enemy {
         }
     }
 
-    public void setSpeed(int speed){
+    void setSpeed(int speed){
         this.speed = speed;
     }
 
     //collisions take away health
-    public void removeHealth(int t){
+    void removeHealth(int t){
         health -= t;
         checkHealth();
     }
 
-    public boolean getStatus(){
+    boolean getStatus(){
         return isAlive;
     }
 

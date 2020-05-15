@@ -2,17 +2,16 @@ package com.project.spacedefense;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-public class Tower {
+class Tower {
 
-    int x,y,range, health;
+    int x,y;
+    private int range;
     int width, height, damage;
     long timeSinceLastShot;
     private float angle;
@@ -87,7 +86,6 @@ public class Tower {
     }
 
     void shoot(){
-        //timeSinceLastShot = 0;
         projectiles.add(new Projectile(context, target, x, y, damage));
         System.out.println("New bullet");
         timeSinceLastShot = System.currentTimeMillis();
@@ -99,7 +97,7 @@ public class Tower {
                 target = getTarget();
             }
 
-            if(target == null || target.isAlive == false){
+            if(target == null || !target.isAlive){
                 targeted = false;
             }
             if ((System.currentTimeMillis() - timeSinceLastShot) >= firingSpeed) {
