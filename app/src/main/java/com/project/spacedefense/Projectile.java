@@ -74,8 +74,11 @@ class Projectile {
     }
 
     boolean getStatus(){
-        if(target.getStatus() && target != null) {
-            return isAlive;
+        if(target != null) {
+            if (target.getStatus()) {
+                return isAlive;
+            }
+            return false;
         }
         return false;
     }

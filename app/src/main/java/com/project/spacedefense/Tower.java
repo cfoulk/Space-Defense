@@ -20,7 +20,7 @@ class Tower {
     Context context;
 
     Bitmap mTower, mCannon;
-    ArrayList<Projectile> projectiles;
+    CopyOnWriteArrayList<Projectile> projectiles;
     private CopyOnWriteArrayList<Enemy> enemies;
     Enemy target;
     private EnemyWave mEnemyWave;
@@ -39,7 +39,7 @@ class Tower {
         this.mEnemyWave = mEnemyWave;
         this.enemies = mEnemyWave.getEnemyList();
         this.targeted = false;
-        this.projectiles = new ArrayList<>();
+        this.projectiles = new CopyOnWriteArrayList<>();
 
 
     }
